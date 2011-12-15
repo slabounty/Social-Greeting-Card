@@ -1,6 +1,6 @@
 module ApplicationHelper
     def title
-        base_title = "Social Greeting"
+        base_title = "Greeting Social"
         if @title.nil?
             base_title
         else
@@ -9,6 +9,6 @@ module ApplicationHelper
     end
 
     def logo
-        image_tag("logo.png", :alt => "Social Greeting", :class => "round")
+        image_tag("logo.png", :alt => "Greeting Social", :class => "round")
     end
 end
