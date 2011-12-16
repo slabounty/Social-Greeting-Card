@@ -29,17 +29,17 @@ section h1 {
 
 /* Links */
 a {
-    color: white;
+    color: #09c;
     text-decoration: none;
 }
 
 a:hover {
-    color: white;
+    color: #069;
     text-decoration: underline;
 }
 
 a:visited {
-    color: white;
+    color: #069;
 }
 
 /* Navigation */
@@ -181,4 +181,12 @@ td.sidebar {
 #error_explanation ul li {
     font-size: 12px;
     list-style: square;
+}
+
+ul.users {
+    margin-top: 1em;
+}
+
+.users li {
+    list-style: none;
 }
