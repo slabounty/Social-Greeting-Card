@@ -5,10 +5,31 @@
                 <%= gravatar_for @user %>
                 <%= @user.first_name %> <%= @user.last_name %>: <%= @user.email%>
             </h1>
+            <% if current_user?(@user) %>
+                <% unless @user.received_cards.empty? %>
+                    <h2>Received Cards</h2>
+                    <table class="cards" summary="User received cards">
+                        <%= render :partial => 'cards/cards', :collection => @received_cards, :as => :card %>
+                    </table>
+                    <%= will_paginate @received_cards %>
+                <% end %>
+                <% unless @user.sent_cards.empty? %>
+                    <h2>Sent Cards</h2>
+                    <table class="cards" summary="User sent cards">
+                        <%= render :partial => 'cards/cards', :collection => @sent_cards, :as => :card %>
+                    </table>
+                    <%= will_paginate @sent_cards %>
+                <% end %>
+            <% else %>
+                <%= link_to "Send a Card to #{@user.first_name}!", { :action => 'send_card', :recipient => @user } , :class => "signup_button round" %>
+            <% end %>
         </td>
         <td class = "sidebar round">
             <strong>Name</strong> <%= @user.first_name %> <%= @user.last_name %><br />
             <strong>URL</strong> <%= link_to user_path(@user), @user %>
+            <% if current_user?(@user) %>
+                <strong>Sent Cards</strong> <%= @user.sent_cards.count %>
+            <% end %>
         </td>
     </tr>
 </table>

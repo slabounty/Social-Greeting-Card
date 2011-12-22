@@ -1,6 +1,10 @@
 require 'digest'
 
 class User < ActiveRecord::Base
+
+    has_many :sent_cards, :class_name => "Card", :foreign_key => "sender_id"
+    has_many :received_cards, :class_name => "Card", :foreign_key => "recipient_id"
+
     attr_accessor :password
     attr_accessible :first_name, :last_name, :email, :password, :password_confirmation
 

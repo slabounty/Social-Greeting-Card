@@ -47,6 +47,8 @@ class UsersController < ApplicationController
     def show
         @user = User.find(params[:id])
         @title = "#{@user.first_name} #{@user.last_name}"
+        @sent_cards = @user.sent_cards.paginate(:page => params[:page])
+        @received_cards = @user.received_cards.paginate(:page => params[:page])
     end
 
     def destroy
@@ -55,11 +57,13 @@ class UsersController < ApplicationController
         redirect_to users_path
     end
 
-    private
-
-    def authenticate
-        deny_access unless signed_in?
+    def send_card
+        @recipient = User.find(params[:recipient])
+        @card = Card.new(:recipient => @recipient)
+        puts "Recipient = #{@card.recipient_id}"
     end
+
+    private
 
     def correct_user
         @user = User.find(params[:id])

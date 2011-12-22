@@ -302,4 +302,19 @@ describe UsersController do
             end
         end
     end
+
+    describe "GET 'show'" do
+        before(:each) do
+            @sender = test_sign_in(Factory(:sender))
+            @recipient = Factory(:recipient)
+        end
+
+        it "should show the user's sent cards" do
+            card1 = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 1")
+            card2 = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 2")
+            get :show, :id => @sender
+            response.should have_selector("span.greeting", :content => card1.greeting)
+            response.should have_selector("span.greeting", :content => card2.greeting)
+        end
+    end
 end

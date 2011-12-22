@@ -150,4 +150,31 @@ describe User do
             @user.should be_admin
         end
     end
+
+    describe "cards associations" do
+        
+        before(:each) do
+            @sender = Factory(:sender)
+            @recipient = Factory(:recipient)
+            @card1 = Factory(:card, :sender => @sender, :recipient => @recipient, :created_at => 1.day.ago)
+            @card2 = Factory(:card, :sender => @sender, :recipient => @recipient, :created_at => 1.hour.ago)
+        end
+
+        it "should have a sent cards attribute" do
+            @sender.should respond_to(:sent_cards)
+        end
+
+        it "should have a received cards attribute" do
+            @recipient.should respond_to(:received_cards)
+        end
+
+        it "should have the cards in the right order" do
+            @sender.sent_cards.should == [@card2, @card1]
+        end
+
+        it "should have the cards in the right order" do
+            @recipient.received_cards.should == [@card2, @card1]
+        end
+
+    end
 end

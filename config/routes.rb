@@ -1,7 +1,12 @@
 Greeting::Application.routes.draw do
 
+
+    get 'users/send_card'   # This needs to be before the resources :users line below 
+                            # otherwise we end up at users/show.
+
     resources :users
     resources :sessions, :only => [:new, :create, :destroy]
+    resources :cards, :only => [:create]
 
     match '/signup', :to => 'users#new'
     match '/signin', :to => 'sessions#new'

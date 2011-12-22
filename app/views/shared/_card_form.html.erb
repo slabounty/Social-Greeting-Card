@@ -1,0 +1,11 @@
+<%= form_for @card do |f| %>
+    Recipient ID: <%= @card.recipient_id %>
+    <%= render 'shared/error_messages', :object => f.object %>
+    <div class="field">
+        <%= f.text_area :greeting %>
+    </div>
+    <%= f.hidden_field :recipient_id, :value => @card.recipient_id %>
+    <div class="actions">
+        <%= f.submit "Submit" %>
+    </div>
+<% end %>

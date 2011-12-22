@@ -22,6 +22,14 @@ namespace :db do
                          :password => password,
                          :password_confirmation => password)
 
+
+        end
+
+        User.all(:limit => 30).each do |user|
+            10.times do 
+                user.sent_cards.create!(:greeting => Faker::Lorem.sentence(5)[0..40], :recipient => User.find(Random.rand(30)+1))
+                # user.sent_cards.create!(:greeting => "Hello from #{user.first_name}", :recipient => User.find(Random.rand(30)+1))
+            end
         end
     end
 end
