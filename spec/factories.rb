@@ -20,7 +20,8 @@ Factory.sequence :email do |n|
 end
 
 Factory.define :card do |card|
-    card.greeting       "Hello World!"
-    card.sender         :sender
-    card.recipient      :recipient
+    card.greeting           "Hello World!"
+    card.sender             :sender
+    card.recipient          :recipient
+    card.image_file_name    "card_images/birthday_cake.jpeg"
 end

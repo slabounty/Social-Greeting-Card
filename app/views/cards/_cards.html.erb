@@ -1,6 +1,7 @@
 <tr>
     <td class="card">
         From <%= "#{card.sender.first_name} #{card.sender.last_name}:" %><p/>
+        <%= image_tag card.image_file_name %><p/>
         <span class="greeting"><%= card.greeting %></span>
         <span class="timestamp">
             Created <%= time_ago_in_words(card.created_at) %> ago.

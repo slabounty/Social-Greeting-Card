@@ -60,7 +60,7 @@ class UsersController < ApplicationController
     def send_card
         @recipient = User.find(params[:recipient])
         @card = Card.new(:recipient => @recipient)
-        puts "Recipient = #{@card.recipient_id}"
+        @image_files = Dir.glob("app/assets/images/card_images/*").map { |image_file| image_file.gsub(/app\/assets\/images\//, "")}
     end
 
     private

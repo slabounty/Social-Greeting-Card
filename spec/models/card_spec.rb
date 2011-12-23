@@ -4,7 +4,9 @@ describe Card do
     before(:each) do
         @sender = Factory(:user)
         @recipient = Factory(:user, :email => "example@example.net")
-        @attr = { :greeting => "Hello World", :recipient => @recipient }
+        @attr = {   :greeting => "Hello World", 
+                    :image_file_name => "card_images/birthday_cake.jpeg", 
+                    :recipient => @recipient }
     end
 
     it "should create a new instance given valid attributes" do

@@ -6,7 +6,8 @@ class CardsController < ApplicationController
 
         recipient = User.find_by_id(params[:card][:recipient_id].to_i)
         greeting = params[:card][:greeting]
-        @card = current_user.sent_cards.build(:greeting => greeting, :recipient => recipient)
+        image_file_name = params[:card][:image_file_name]
+        @card = current_user.sent_cards.build(:greeting => greeting, :recipient => recipient, :image_file_name => image_file_name)
 
         if @card.save
             flash[:success] = "Card created!"

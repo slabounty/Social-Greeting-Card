@@ -37,7 +37,9 @@ describe CardsController do
 
         describe "success" do
             before(:each) do
-                @attr = { :greeting => "Lorem ipsum", :recipient_id => @recipient.id }
+                @attr = {   :greeting => "Lorem ipsum", 
+                            :image_file_name => "card_images/birthday_cake.jpeg",
+                            :recipient_id => @recipient.id }
             end
 
             it "should create a card" do
