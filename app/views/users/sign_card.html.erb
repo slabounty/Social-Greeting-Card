@@ -1,8 +1,10 @@
 <h1>Sign Card for <%= @card.recipient.first_name %> <%= @card.recipient.last_name %></h1>
 
+<%= render :partial => 'cards/cardbases', :locals => {:card => @card, :display_type => :signed} %>
+
 <%= form_tag ("do_sign") do %>
-    <%= label_tag("Add A Message:") %>
-    <%= text_field_tag(:message) %>
+    <%= label_tag("Add A Message: ") %><p/>
+    <%= text_field_tag(:message) %><p/>
     <%= hidden_field_tag :card, @card.id %>
     <%= submit_tag("Submit") %>
 
