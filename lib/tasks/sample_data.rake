@@ -28,10 +28,20 @@ namespace :db do
         image_files = Dir.glob("app/assets/images/card_images/*").map { |image_file| image_file.gsub(/app\/assets\/images\//, "")}
         User.all(:limit => 30).each do |user|
             10.times do 
-                user.sent_cards.create!(
+                card = user.sent_cards.create!(
                     :greeting => Faker::Lorem.sentence(5)[0..40], 
                     :image_file_name => image_files[Random.rand(image_files.size)],
                     :recipient => User.find(Random.rand(30)+1))
+                5.times do 
+                    sig = Signature.new(:signer_id => User.find(Random.rand(30) + 1).id)
+                    if Random.rand(2) == 1
+                        sig.signed = true
+                        sig.message =  Faker::Lorem.sentence(5)[0..40]
+                    end
+                    card.signatures << sig
+                    sig.save
+                    card.save
+                end
             end
         end
     end

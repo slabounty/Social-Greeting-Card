@@ -1,8 +1,10 @@
 Greeting::Application.routes.draw do
 
 
-    get 'users/send_card'   # This needs to be before the resources :users line below 
+    get  'users/send_card'  # This needs to be before the resources :users line below 
                             # otherwise we end up at users/show.
+    get  'users/sign_card'   
+    post 'users/do_sign'   
 
     resources :users
     resources :sessions, :only => [:new, :create, :destroy]

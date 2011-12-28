@@ -49,6 +49,9 @@ class UsersController < ApplicationController
         @title = "#{@user.first_name} #{@user.last_name}"
         @sent_cards = @user.sent_cards.paginate(:page => params[:page])
         @received_cards = @user.received_cards.paginate(:page => params[:page])
+        @signed_cards = @user.signed_cards.paginate(:page => params[:page])
+        @need_to_sign_cards = @user.signatures.find_all { |s| s.signed == false }.map { |s| s.card } # .paginate(:page => params[:page])
+        @already_signed_cards = @user.signatures.find_all { |s| s.signed == true }.map { |s| s.card } # .paginate(:page => params[:page])
     end
 
     def destroy
@@ -61,6 +64,25 @@ class UsersController < ApplicationController
         @recipient = User.find(params[:recipient])
         @card = Card.new(:recipient => @recipient)
         @image_files = Dir.glob("app/assets/images/card_images/*").map { |image_file| image_file.gsub(/app\/assets\/images\//, "")}
+    end
+
+    def sign_card
+        puts "Calling Sign the Card!!"
+        @card = Card.find(params[:card])
+    end
+
+    def do_sign
+        card = Card.find(params[:card])
+        signature = Signature.where(:card_id => card, :signer_id => current_user).limit(1)[0]
+        signature.signed = true
+        signature.message = params[:message]
+        signature.save
+
+        flash[:success] = "Card Signed!!"
+        redirect_to current_user
+    end
+
+    def sign
     end
 
     private

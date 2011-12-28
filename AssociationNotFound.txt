@@ -1,0 +1,44 @@
+    create_table :signatures do |t|
+      t.integer :signer_id
+      t.integer :card_id
+
+      t.timestamps
+    end
+
+    class Signature < ActiveRecord::Base
+        belongs_to :card
+        belongs_to :user
+    end
+
+    class Card < ActiveRecord::Base
+        has_many :signatures
+        has_many :signers, :through => :signatures, :foreign_key => "card_id"
+    end
+
+
+    class User < ActiveRecord::Base
+
+        has_many :sent_cards, :class_name => "Card", :foreign_key => "sender_id"
+        has_many :received_cards, :class_name => "Card", :foreign_key => "recipient_id"
+
+        has_many :signatures
+        has_many :signed_cards, :through => :signatures, :foreign_key => "signer_id"
+
+    end
+
+
+    ruby-1.9.2-p0 > u15.signed_cards
+    ActiveRecord::HasManyThroughSourceAssociationNotFoundError: Could not find the source association(s) :signed_card or :signed_cards in model Signature. Try 'has_many :signed_cards, :through => :signatures, :source => <name>'. Is it one of :card or :user?
+        from /home/slabounty/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.1.0/lib/active_record/reflection.rb:517:in `check_validity!'
+        from /home/slabounty/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.1.0/lib/active_record/associations/association.rb:27:in `initialize'
+        from /home/slabounty/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.1.0/lib/active_record/associations/collection_association.rb:24:in `initialize'
+        from /home/slabounty/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.1.0/lib/active_record/associations.rb:164:in `new'
+        from /home/slabounty/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.1.0/lib/active_record/associations.rb:164:in `association'
+        from /home/slabounty/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.1.0/lib/active_record/associations/builder/association.rb:41:in `block in define_readers'
+        from (irb):11
+        from /home/slabounty/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.1.0/lib/rails/commands/console.rb:45:in `start'
+        from /home/slabounty/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.1.0/lib/rails/commands/console.rb:8:in `start'
+        from /home/slabounty/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.1.0/lib/rails/commands.rb:40:in `<top (required)>'
+        from script/rails:6:in `require'
+        from script/rails:6:in `<main>'
+

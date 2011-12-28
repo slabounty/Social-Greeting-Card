@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
     has_many :sent_cards, :class_name => "Card", :foreign_key => "sender_id"
     has_many :received_cards, :class_name => "Card", :foreign_key => "recipient_id"
 
+    has_many :signatures, :foreign_key => "signer_id"
+    has_many :signed_cards, :through => :signatures, :source => :card 
+
     attr_accessor :password
     attr_accessible :first_name, :last_name, :email, :password, :password_confirmation
 

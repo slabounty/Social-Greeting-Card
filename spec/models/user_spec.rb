@@ -177,4 +177,26 @@ describe User do
         end
 
     end
+
+    describe "signer associations" do
+        before(:each) do
+            @sender = Factory(:sender)
+            @recipient = Factory(:recipient)
+            @card = Factory(:card, :sender => @sender, :recipient => @recipient, :created_at => 1.day.ago)
+            @signer = Factory(:signer)
+            @card.signers << @signer
+        end
+
+        it "should have a signed cards attribute" do
+            @signer.should respond_to(:signed_cards)
+        end
+
+        it "should be able to sign a card" do
+            @signer.signed_cards[0].should == @card
+        end
+
+        it "should be able to add a signed message" do
+        end
+
+    end
 end

@@ -1,0 +1,35 @@
+
+Posting as a solution even though it's partial because I wanted to clean up a
+few things. The migration remained the same as the previous version. I'm now
+seeing a SQL error (see below) where it can't find user_id in Signature. I
+hate to say it, but mostly I've been putting in :foreign_key whereever I think
+they might help to no avail.
+
+        class Signature < ActiveRecord::Base
+            belongs_to :card
+            belongs_to :signer, :class_name => "User"
+        end
+
+
+        class Card < ActiveRecord::Base
+            # Correct
+            has_many :signatures
+            has_many :signers, :through => :signatures, :source => :user
+
+        end
+
+        class User < ActiveRecord::Base
+            # Wrong!
+            has_many :signatures, :foreign_key => "signer_id"
+            has_many :signed_cards, :through => :signatures, :source => :card
+        end
+
+With the error (minus stack trace)
+
+    ruby-1.9.2-p0 >   u15.signed_cards
+      Card Load (0.5ms)  SELECT "cards".* FROM "cards" INNER JOIN "signatures" ON "cards"."id" = "signatures"."card_id" WHERE "signatures"."user_id" = 15 ORDER BY cards.created_at DESC
+    SQLite3::SQLException: no such column: signatures.user_id: SELECT "cards".* FROM "cards" INNER JOIN "signatures" ON "cards"."id" = "signatures"."card_id" WHERE "signatures"."user_id" = 15 ORDER BY cards.created_at DESC
+    ActiveRecord::StatementInvalid: SQLite3::SQLException: no such column: signatures.user_id: SELECT "cards".* FROM "cards" INNER JOIN "signatures" ON "cards"."id" = "signatures"."card_id" WHERE "signatures"."user_id" = 15 ORDER BY cards.created_at DESC
+
+
+`Card.signers` returns an empty array as expected.

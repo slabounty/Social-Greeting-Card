@@ -15,6 +15,10 @@ Factory.define :recipient, :parent => :user do |recipient|
     recipient.email             "recipient@example.com"
 end
 
+Factory.define :signer, :parent => :user do |signer|
+    signer.email             "signer@example.com"
+end
+
 Factory.sequence :email do |n|
     "person-#{n}@example.com"
 end

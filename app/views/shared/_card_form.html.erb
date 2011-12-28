@@ -1,9 +1,15 @@
 <%= form_for @card do |f| %>
     <%= render 'shared/error_messages', :object => f.object %>
+
+    <h3>Add A Greeting:</h3>
     <div class="field">
         <%= f.text_area :greeting %>
     </div>
-    <%= f.hidden_field :recipient_id, :value => @card.recipient_id %>
+
+    <h3>Add Signers Email:</h3>
+    <div class="field">
+        <%= f.text_area :signers %>
+    </div>
 
     <h3>Select Card:</h3>
     <% @image_files.each do |image_file_name| %>
@@ -11,6 +17,8 @@
         <%= f.radio_button :image_file_name, image_file_name %>
         <p/>
     <% end %>
+
+    <%= f.hidden_field :recipient_id, :value => @card.recipient_id %>
 
     <div class="actions">
         <%= f.submit "Submit" %>

@@ -10,8 +10,23 @@ class CardsController < ApplicationController
         @card = current_user.sent_cards.build(:greeting => greeting, :recipient => recipient, :image_file_name => image_file_name)
 
         if @card.save
-            flash[:success] = "Card created!"
-            redirect_to root_path
+            signers = params[:card][:signers].split(",").map { |s| s.strip } if params[:card][:signers] != nil
+            if signers != nil
+                signers.each do |s|
+                    if (u = User.find_by_email(s)) != nil
+                        @card.signers << u
+                    end
+                end
+            end
+
+            if @card.save
+                flash[:success] = "Card created and signers added (if there)!"
+                redirect_to current_user
+            else
+                flash.now[:error] = "Card not created!"
+                render 'pages/home'
+            end
+
         else
             flash.now[:error] = "Card not created!"
             render 'pages/home'

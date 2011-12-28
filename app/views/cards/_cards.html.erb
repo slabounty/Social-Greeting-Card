@@ -1,8 +1,25 @@
 <tr>
     <td class="card">
-        From <%= "#{card.sender.first_name} #{card.sender.last_name}:" %><p/>
+        <% if display_type == :received %>
+            From: <%= "#{card.sender.first_name} #{card.sender.last_name}:" %><p/>
+        <% elsif display_type == :sent %>
+            To: <%= "#{card.recipient.first_name} #{card.recipient.last_name}:" %><p/>
+        <% elsif display_type == :need_to_sign %>
+            To: <%= "#{card.recipient.first_name} #{card.recipient.last_name}:" %><p/>
+            From: <%= "#{card.sender.first_name} #{card.sender.last_name}:" %><p/>
+            <%= link_to "Sign card for #{card.recipient.first_name}!", { :action => 'sign_card', :card => card } %></p>
+        <% elsif display_type == :signed %>
+            To: <%= "#{card.recipient.first_name} #{card.recipient.last_name}:" %><p/>
+            From: <%= "#{card.sender.first_name} #{card.sender.last_name}:" %><p/>
+        <% end %>
         <%= image_tag card.image_file_name %><p/>
-        <span class="greeting"><%= card.greeting %></span>
+        <span class="greeting"><%= card.greeting %></span><p/>
+        <% card.signatures.each do |sig| %>
+            <% if sig.signed == true %>
+                Signed: <%= "#{sig.signer.first_name} #{sig.signer.last_name}" %><p/>
+                <%= "#{sig.message}" %><p/>
+            <% end %>
+        <% end %>
         <span class="timestamp">
             Created <%= time_ago_in_words(card.created_at) %> ago.
         </span>

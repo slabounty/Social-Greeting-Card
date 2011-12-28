@@ -1,0 +1,30 @@
+  def change
+    create_table :signatures do |t|
+      t.integer :signer_id
+      t.integer :card_id
+      t.boolean :signed,    :default => false
+      t.text :message
+
+      t.timestamps
+    end
+
+    class Signature < ActiveRecord::Base
+
+        # Correct
+        belongs_to :card
+
+        # Wrong!
+        belongs_to :signer, :class_name => "User", :foreign_key => 'signer_id'
+    end
+
+    class User < ActiveRecord::Base
+        # Wrong!
+        has_many :signatures, :foreign_key => "signer_id"
+        has_many :signed_cards, :through => :signatures, :source => :card, :foreign_key => 'signer_id'
+    end
+
+    class Card < ActiveRecord::Base
+        # Correct
+        has_many :signatures
+        has_many :signers, :through => :signatures, :source => :user
+    end

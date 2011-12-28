@@ -16,6 +16,7 @@ describe CardsController do
         before(:each) do
             @sender = test_sign_in(Factory(:sender))
             @recipient = Factory(:recipient)
+            @signer = Factory(:signer)
         end
 
         describe "failure" do
@@ -39,7 +40,8 @@ describe CardsController do
             before(:each) do
                 @attr = {   :greeting => "Lorem ipsum", 
                             :image_file_name => "card_images/birthday_cake.jpeg",
-                            :recipient_id => @recipient.id }
+                            :recipient_id => @recipient.id, 
+                            :signers => "#{@signer.email}" }
             end
 
             it "should create a card" do
@@ -48,9 +50,10 @@ describe CardsController do
                 end.should change(Card, :count).by(1)
             end
 
-            it "should redirect to the home page" do
+            it "should redirect to the user page" do
                 post :create, :card => @attr
-                response.should redirect_to(root_path)
+#                response.should redirect_to(root_path)
+                response.should redirect_to(@sender )
             end
 
             it "should have a flash message" do

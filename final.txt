@@ -1,0 +1,46 @@
+OK, since I had such a hard time with this, I wanted to show everyone what the
+final version looked like. A good part of the reason I had such a hard time
+firguring this out, was the fact that the rails console didn't seem to be
+reloading things correctly as I made changes. I didn't realize this until I
+gave up one night, came back the next morning and the case that had been
+working the previous night wasn't and the case that wasn't working was. 
+
+The migration is the same, but I'll repeat it for completeness sake.
+
+    def change
+        create_table :signatures do |t|
+            t.integer :signer_id
+            t.integer :card_id
+            t.boolean :signed,    :default => false
+            t.text :message
+
+            t.timestamps
+        end
+    end
+
+The Signature class has the two belongs_to with card being the case that
+normally gets shown in the examples and the signer being of type user.
+
+    class Signature < ActiveRecord::Base
+        belongs_to :card
+        belongs_to :signer, :class_name => "User"
+    end
+
+The User has many signatures (necessary even if you don't use them directly)
+an dmany signed_cards through signatures with a source of card (telling Rails
+which class type the signed_cards are.
+
+    class User < ActiveRecord::Base
+        has_many :signatures, :foreign_key => "signer_id"
+        has_many :signed_cards, :through => :signatures, :source => :card 
+    end
+
+Finally, the Card has many signatures (once again necessary) and many signers
+through signatures and the foreign_key for the signer of signer_id.
+
+    class Card < ActiveRecord::Base
+        has_many :signatures
+        has_many :signers, :through => :signatures, :foreign_key => 'signer_id'
+    end
+
+Hopefully, this will help others having similar issues.
