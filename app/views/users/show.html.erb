@@ -3,9 +3,11 @@
         <td class="main">
             <h1>
                 <%= gravatar_for @user %>
-                <%= @user.first_name %> <%= @user.last_name %>: <%= @user.email%>
+                <%= @user.first_name %> <%= @user.last_name %>:<br/>
             </h1>
+            <h3><%= @user.email%></h3>
             <% if current_user?(@user) %>
+                <%= link_to "Send a Card!", users_path, :class => "sendcard_button round" %>
                 <% unless @user.received_cards.empty? %>
                     <h2>Received Cards</h2>
                     <table class="cards" summary="User received cards">

@@ -95,6 +95,34 @@ a.signup_button {
     padding: 20px;
 }
 
+/* Send card button */
+a.sendcard_button {
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    display: block;
+    text-align: center;
+    width: 190px;
+    color: #fff;
+    background: #006400;
+    font-size: 150%;
+    font-weight: bold;
+    padding: 20px;
+}
+
+/* Send card suggestion */
+.sendcard_suggestion_button {
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    display: block;
+    text-align: center;
+    width: 290px;
+    color: #fff;
+    background: #006400;
+    font-size: 150%;
+    font-weight: bold;
+    padding: 20px;
+}
+
 /* Round corners */
 .round {
     -moz-border-radius: 10px;
