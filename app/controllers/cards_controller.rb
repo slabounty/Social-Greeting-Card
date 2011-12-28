@@ -20,7 +20,7 @@ class CardsController < ApplicationController
             end
 
             if @card.save
-                flash[:success] = "Card created and signers added (if there)!"
+                flash[:success] = "Card created and signers added (if there were any)!"
                 redirect_to current_user
             else
                 flash.now[:error] = "Card not created!"
