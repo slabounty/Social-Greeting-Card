@@ -42,9 +42,11 @@
         </td>
         <td class = "sidebar round">
             <strong>Name</strong> <%= @user.first_name %> <%= @user.last_name %><br />
-            <strong>URL</strong> <%= link_to user_path(@user), @user %>
+            <strong>URL</strong> <%= link_to user_path(@user), @user %><br/>
             <% if current_user?(@user) %>
-                <strong>Sent Cards</strong> <%= @user.sent_cards.count %>
+                <strong>Sent Cards</strong> <%= @user.sent_cards.count %><br/>
+                <strong>Received Cards</strong> <%= @user.received_cards.count %><br/>
+                <strong>Signed Cards</strong> <%= @user.signed_cards.count %><br/>
             <% end %>
         </td>
     </tr>
