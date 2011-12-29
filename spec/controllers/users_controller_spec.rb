@@ -313,8 +313,7 @@ describe UsersController do
             card1 = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 1")
             card2 = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 2")
             get :show, :id => @sender
-            response.should have_selector("span.greeting", :content => card1.greeting)
-            response.should have_selector("span.greeting", :content => card2.greeting)
+            response.should contain(/see sent cards/i)
         end
     end
 end
