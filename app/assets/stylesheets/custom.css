@@ -85,6 +85,7 @@ nav ul li a:hover {
 a.signup_button {
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 10px;
     display: block;
     text-align: center;
     width: 190px;

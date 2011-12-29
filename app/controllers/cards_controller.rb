@@ -33,4 +33,8 @@ class CardsController < ApplicationController
         end
     end
 
+    def show_all_cards
+        @image_files = Dir.glob("app/assets/images/card_images/*").map { |image_file| image_file.gsub(/app\/assets\/images\//, "")}
+    end
+
 end
