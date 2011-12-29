@@ -1,0 +1,5 @@
+<table class="cards" summary="Cards to sign">
+    <%= render :partial => 'cards/cards', :collection => @need_to_sign_cards, :as => :card, 
+            :locals => { :display_type => :need_to_sign} %>
+</table>
+

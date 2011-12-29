@@ -86,6 +86,26 @@ class UsersController < ApplicationController
     def sign
     end
 
+    def see_received
+        @user = User.find(params[:id])
+        @received_cards = @user.received_cards.paginate(:page => params[:page])
+    end
+
+    def see_sent
+        @user = User.find(params[:id])
+        @sent_cards = @user.sent_cards.paginate(:page => params[:page])
+    end
+
+    def see_need_to_sign
+        @user = User.find(params[:id])
+        @need_to_sign_cards = @user.signatures.find_all { |s| s.signed == false }.map { |s| s.card } # .paginate(:page => params[:page])
+    end
+
+    def see_signed 
+        @user = User.find(params[:id])
+        @already_signed_cards = @user.signatures.find_all { |s| s.signed == true }.map { |s| s.card } # .paginate(:page => params[:page])
+    end
+
     private
 
     def correct_user

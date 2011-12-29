@@ -8,38 +8,35 @@
             <h3><%= @user.email%></h3>
             <% if current_user?(@user) %>
                 <%= link_to "Send a Card!", users_path, :class => "sendcard_button round" %>
+                <ul class="cards-menu">
                 <% unless @user.received_cards.empty? %>
-                    <h2>Received Cards</h2>
-                    <table class="cards" summary="User received cards">
-                        <%= render :partial => 'cards/cards', :collection => @received_cards, :as => :card,
-                                :locals => { :display_type => :received } %>
-                    </table>
-                    <%= will_paginate @received_cards %>
+                    <li>
+                    <%= link_to "See received cards!", { :action => 'see_received', :id => @user.id }, 
+                        :class => "sendcard_button round" %>
+                    </li>
                 <% end %>
                 <% unless @user.sent_cards.empty? %>
-                    <h2>Sent Cards</h2>
-                    <table class="cards" summary="User sent cards">
-                        <%= render :partial => 'cards/cards', :collection => @sent_cards, :as => :card, 
-                                :locals => { :display_type => :sent} %>
-                    </table>
-                    <%= will_paginate @sent_cards %>
+                    <li>
+                    <%= link_to "See sent cards!", { :action => 'see_sent', :id => @user.id }, 
+                        :class => "sendcard_button round" %>
+                    </li>
                 <% end %>
                 <% unless @user.signed_cards.empty? %>
-                    <h2>Need to Sign Cards</h2>
-                    <table class="cards" summary="Cards to sign">
-                        <%= render :partial => 'cards/cards', :collection => @need_to_sign_cards, :as => :card, 
-                                :locals => { :display_type => :need_to_sign} %>
-                    </table>
+                    <li>
+                    <%= link_to "See cards to sign!", { :action => 'see_need_to_sign', :id => @user.id }, 
+                        :class => "sendcard_button round" %>
+                    </li>
                 <% end %>
                 <% unless @user.signed_cards.empty? %>
-                    <h2>Already Signed Cards</h2>
-                    <table class="cards" summary="Cards already signed">
-                        <%= render :partial => 'cards/cards', :collection => @already_signed_cards, :as => :card, 
-                                :locals => { :display_type => :signed} %>
-                    </table>
+                    <li>
+                    <%= link_to "See the cards you've signed!", { :action => 'see_signed', :id => @user.id }, 
+                        :class => "sendcard_button round" %>
+                    </li>
                 <% end %>
+                </ul>
             <% else %>
-                <%= link_to "Send a Card to #{@user.first_name}!", { :action => 'send_card', :recipient => @user } , :class => "signup_button round" %>
+                <%= link_to "Send a Card to #{@user.first_name}!", { :action => 'send_card', :recipient => @user } , 
+                    :class => "signup_button round" %>
             <% end %>
         </td>
         <td class = "sidebar round">

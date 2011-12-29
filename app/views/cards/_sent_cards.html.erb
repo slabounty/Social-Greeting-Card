@@ -1,8 +1,6 @@
-<tr>
-    <td class="card">
-        <span class="greeting"><%= card.greeting %></span>
-        <span class="timestamp">
-            Created <%= time_ago_in_words(card.created_at) %> ago.
-        </span>
-    </td>
-</tr>
+<table class="cards" summary="User sent cards">
+    <%= render :partial => 'cards/cards', :collection => @sent_cards, :as => :card, 
+            :locals => { :display_type => :sent} %>
+</table>
+<%= will_paginate @sent_cards %>
+

@@ -97,8 +97,6 @@ a.signup_button {
 
 /* Send card button */
 a.sendcard_button {
-    /* margin-left: auto; */
-    /* margin-right: auto; */
     display: block;
     text-align: center;
     width: 190px;
@@ -107,6 +105,12 @@ a.sendcard_button {
     font-size: 150%;
     font-weight: bold;
     padding: 20px;
+}
+
+li a.sendcard_button {
+    margin-left: -20px;
+    margin-right: 0;
+    margin-bottom: 10px;
 }
 
 /* Send card suggestion */
@@ -269,7 +273,14 @@ form.new_card {
     margin-bottom: 2em;
 }
 
-from.new_card textarea {
+form.new_card textarea {
     height: 4em;
     margin-bottom
+}
+
+/* Navigation */
+ul.cards-menu {
+    list-style-type:none;
+    margin-left: 0;
+    padding: 20px;
 }
