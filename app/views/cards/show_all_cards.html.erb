@@ -1,4 +1,10 @@
 <h1>Pick a card (any card) and send it to someone!</h1>
-<% @image_files.each do |image_file_name| %>
-    <%= image_tag image_file_name, :size => "200x200" %><p/>
+<%= form_tag ("/cards/create_a_card") do %>
+
+    <% @image_files.each do |image_file_name| %>
+        <%=link_to (image_tag image_file_name, :size => "150x150"), "/assets/#{image_file_name}", :class=>"fancybox" %>
+        <%= radio_button_tag 'image_file_name', image_file_name %>
+    <% end %>
+
+    <%= submit_tag("Finish the card!") %>
 <% end %>

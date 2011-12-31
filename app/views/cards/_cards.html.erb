@@ -12,7 +12,7 @@
             To: <%= "#{card.recipient.first_name} #{card.recipient.last_name}:" %><p/>
             From: <%= "#{card.sender.first_name} #{card.sender.last_name}:" %><p/>
         <% end %>
-        <%= image_tag card.image_file_name %><p/>
+        <%= image_tag card.image_file_name, :size => "200x200" %><p/>
         <span class="greeting"><%= card.greeting %></span><p/>
         <% card.signatures.each do |sig| %>
             <% if sig.signed == true %>

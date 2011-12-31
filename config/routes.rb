@@ -10,7 +10,10 @@ Greeting::Application.routes.draw do
     get  'users/see_need_to_sign'   
     post 'users/do_sign'   
 
-    get 'cards/show_all_cards'
+    match '/cards', :to => 'cards#show_all_cards'
+    get  'cards/show_all_cards'
+    post 'cards/create_a_card'
+    post 'cards/create_from_image'   
 
     resources :users
     resources :sessions, :only => [:new, :create, :destroy]

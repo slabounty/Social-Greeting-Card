@@ -1,0 +1,20 @@
+<h1> Create a Card </h1>
+<%= image_tag @image_file_name, :size => "200x200" %>
+<%= form_tag ("create_from_image") do %>
+
+    <h3>Who's this going to?:</h3>
+    <%= label_tag("Add the recipient: ") %><p/>
+    <%= text_field_tag(:recipient_email)%><p/>
+
+    <h3>Add A Greeting:</h3>
+    <%= label_tag("Add A Greeting: ") %><p/>
+    <%= text_field_tag(:greeting)%><p/>
+
+    <h3>Add The People you want to sign the card:</h3>
+    <%= label_tag("Add the signers: ") %><p/>
+    <%= text_field_tag(:signers_email)%><p/>
+
+    <%= hidden_field_tag :image_file_name, @image_file_name %>
+
+    <%= submit_tag("Send the card!") %>
+<% end %>

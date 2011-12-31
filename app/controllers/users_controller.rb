@@ -68,7 +68,6 @@ class UsersController < ApplicationController
     end
 
     def sign_card
-        puts "Calling Sign the Card!!"
         @card = Card.find(params[:card])
     end
 
