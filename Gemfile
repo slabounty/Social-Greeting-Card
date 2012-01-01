@@ -21,5 +21,6 @@ end
 
 group :production do
     gem 'pg'
-    gem 'uglifier', '>= 1.0.3'
+    gem 'uglifier'
+    gem 'therubyracer'
 end
