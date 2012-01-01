@@ -5,6 +5,7 @@
         <%=link_to (image_tag image_file_name, :size => "150x150"), "/assets/#{image_file_name}", :class=>"fancybox" %>
         <%= radio_button_tag 'image_file_name', image_file_name %>
     <% end %>
+    <br/>
 
-    <%= submit_tag("Finish the card!") %>
+    <%= submit_tag "Finish the card!" %>
 <% end %>
