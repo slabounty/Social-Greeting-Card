@@ -32,6 +32,11 @@ class CardsController < ApplicationController
         create_card_from_recipient_greeting_image_signers(recipient, greeting, image_file_name, signers)
     end
 
+    def show_single_card
+        puts "show_single_card: params = #{params}"
+        @card = Card.find(params[:card])
+    end
+
     private
 
     def create_card_from_recipient_greeting_image_signers(recipient, greeting, image_file_name, signers)

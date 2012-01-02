@@ -12,6 +12,7 @@ Greeting::Application.routes.draw do
 
     match '/cards', :to => 'cards#show_all_cards'
     get  'cards/show_all_cards'
+    get  'cards/show_single_card'
     post 'cards/create_a_card'
     post 'cards/create_from_image'   
 
