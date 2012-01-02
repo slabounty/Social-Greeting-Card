@@ -1,10 +1,10 @@
-<span class="to">To: <%= "#{@card.recipient.first_name} #{@card.recipient.last_name}" %></span><p/>
-<span class="from">From: <%= "#{@card.sender.first_name} #{@card.sender.last_name}" %></span><p/>
+<span class="to">To: <%= link_to "#{@card.recipient.first_name} #{@card.recipient.last_name}", user_path(@card.recipient) %></span><p/>
+<span class="from">From: <%= link_to "#{@card.sender.first_name} #{@card.sender.last_name}" , user_path(@card.sender)%></span><p/>
 <span class="card_image"><%= image_tag @card.image_file_name %></span><p/><p/>
 <span class="greeting"><%= @card.greeting %></span><p/>
 <% @card.signatures.each do |sig| %>
     <% if sig.signed == true %>
-        <div class="signed">Signed: <%= "#{sig.signer.first_name} #{sig.signer.last_name}" %><p/>
+        <div class="signed">Signed: <%= link_to "#{sig.signer.first_name} #{sig.signer.last_name}", user_path(sig.signer) %><p/>
         <%= "#{sig.message}" %><p/>
         </div>
     <% end %>
