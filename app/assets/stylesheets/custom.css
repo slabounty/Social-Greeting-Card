@@ -228,27 +228,18 @@ h1.cards {
     margin-bottom: 0.3em;
 }
 
-table.cards {
+ul.cards {
     margin-top: 1em;
+    list-style-type: none;
 }
 
-table.cards tr {
-    height: 70px;
-}
-
-table.cards tr td.grvatar {
-    border-top: 1px solid #ccc;
-    vertical-align: top;
-    width: 50px;
-}
-
-table.cards tr td.card {
+ul.cards {
     border-top: 1px solid #ccc;
     vertical-align: top;
     padding-top: 10px
 }
 
-table.cards tr td.card span.timestamp {
+ul.cards span.timestamp {
     display: block;
     font-size 85%;
     color #666;
@@ -294,9 +285,13 @@ ul.cards-menu {
 }
 
 .card_image {
+    padding-top: 100px;
 }
 
 .greeting {
+    padding-top: 0px;
+    margin-top: -20px;
+    font-size: 150%
 }
 
 .timestamp {

@@ -1,29 +1,15 @@
-<tr>
-    <td class="card">
-        <%= link_to :controller => :cards, :action => :show_single_card, :card => card do %>
-        <% if display_type == :received %>
-            <span class="from">From: <%= "#{card.sender.first_name} #{card.sender.last_name}:" %></span><p/>
-        <% elsif display_type == :sent %>
-            <span class="to">To: <%= "#{card.recipient.first_name} #{card.recipient.last_name}:" %></span><p/>
-        <% elsif display_type == :need_to_sign %>
-            <span class="to">To: <%= "#{card.recipient.first_name} #{card.recipient.last_name}:" %></span><p/>
-            <span class="from">From: <%= "#{card.sender.first_name} #{card.sender.last_name}:" %></span><p/>
-            <%= link_to "Sign card for #{card.recipient.first_name}!", { :action => 'sign_card', :card => card } %></p>
-        <% elsif display_type == :signed %>
-            <span class="to">To: <%= "#{card.recipient.first_name} #{card.recipient.last_name}:" %></span><p/>
-            <span class="from">From: <%= "#{card.sender.first_name} #{card.sender.last_name}:" %></span><p/>
-        <% end %>
-        <span class="card_image"><%= image_tag card.image_file_name, :size => "200x200" %></span><p/>
-        <span class="greeting"><%= card.greeting %></span><p/>
-        <% card.signatures.each do |sig| %>
-            <% if sig.signed == true %>
-                <span class="signed">Signed: <%= "#{sig.signer.first_name} #{sig.signer.last_name}" %></span><p/>
-                <%= "#{sig.message}" %><p/>
-            <% end %>
-        <% end %>
-        <span class="timestamp">
-            Created <%= time_ago_in_words(card.created_at) %> ago.
-        </span>
-        <% end %>
-    </td>
-</tr>
+<li>
+    <span class="to">To: <%= link_to "#{card.recipient.first_name} #{card.recipient.last_name}", user_path(card.recipient) %></span><br/>
+    <span class="from">From: <%= link_to "#{card.sender.first_name} #{card.sender.last_name}" , user_path(card.sender)%></span><br/>
+    <% if display_type == :need_to_sign %>
+        <%= link_to "Sign card for #{card.recipient.first_name}!", { :action => 'sign_card', :card => card } %></p>
+    <% end %>
+    <%= link_to :controller => :cards, :action => :show_single_card, :card => card do %>
+        <span class="card_image"><%= image_tag card.image_file_name, :size => "200x200" %></span><br/>
+    <% end %>
+    <span class="greeting"><%= card.greeting %></span><p/>
+    <span class="timestamp">
+        Created <%= time_ago_in_words(card.created_at) %> ago.
+    </span>
+</li>
+<hr/>

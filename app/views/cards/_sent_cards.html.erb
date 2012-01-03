@@ -1,6 +1,6 @@
-<table class="cards" summary="User sent cards">
-    <%= render :partial => 'cards/cards', :collection => @sent_cards, :as => :card, 
-            :locals => { :display_type => :sent} %>
-</table>
+<ul class="cards">
+<%= render :partial => 'cards/cards', :collection => @sent_cards, :as => :card, 
+        :locals => { :display_type => :sent} %>
+</ul>
 <%= will_paginate @sent_cards %>
 

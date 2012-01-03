@@ -1,5 +1,5 @@
-<table class="cards" summary="Cards already signed">
-    <%= render :partial => 'cards/cards', :collection => @already_signed_cards, :as => :card, 
-            :locals => { :display_type => :signed} %>
-</table>
+<ul class="cards">
+<%= render :partial => 'cards/cards', :collection => @already_signed_cards, :as => :card, 
+        :locals => { :display_type => :signed} %>
+</ul>
 
