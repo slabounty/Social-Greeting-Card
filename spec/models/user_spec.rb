@@ -156,8 +156,9 @@ describe User do
         before(:each) do
             @sender = Factory(:sender)
             @recipient = Factory(:recipient)
-            @card1 = Factory(:card, :sender => @sender, :recipient => @recipient, :created_at => 1.day.ago)
-            @card2 = Factory(:card, :sender => @sender, :recipient => @recipient, :created_at => 1.hour.ago)
+            @template = Factory(:template)
+            @card1 = Factory(:card, :sender => @sender, :recipient => @recipient, :template => @template, :created_at => 1.day.ago)
+            @card2 = Factory(:card, :sender => @sender, :recipient => @recipient, :template => @template, :created_at => 1.hour.ago)
         end
 
         it "should have a sent cards attribute" do
@@ -182,7 +183,8 @@ describe User do
         before(:each) do
             @sender = Factory(:sender)
             @recipient = Factory(:recipient)
-            @card = Factory(:card, :sender => @sender, :recipient => @recipient, :created_at => 1.day.ago)
+            @template = Factory(:template)
+            @card = Factory(:card, :sender => @sender, :recipient => @recipient, :template => @template, :created_at => 1.day.ago)
             @signer = Factory(:signer)
             @card.signers << @signer
         end

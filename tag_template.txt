@@ -1,0 +1,39 @@
+# Tag w/ templates
+:templates
+:template_ids
+:templates=
+:template_ids=
+:before_add_for_templates
+:before_add_for_templates?
+:before_add_for_templates=
+:after_add_for_templates
+:after_add_for_templates?
+:after_add_for_templates=
+:before_remove_for_templates
+:before_remove_for_templates?
+:before_remove_for_templates=
+:after_remove_for_templates
+:after_remove_for_templates?
+:after_remove_for_templates=
+:autosave_associated_records_for_templates
+:validate_associated_records_for_templates
+
+# Template w/tag
+[:tags
+ :tag_ids
+ :tags=
+ :tag_ids=
+ :before_add_for_tags
+ :before_add_for_tags?
+ :before_add_for_tags=
+ :after_add_for_tags
+ :after_add_for_tags?
+ :after_add_for_tags=
+ :before_remove_for_tags
+ :before_remove_for_tags?
+ :before_remove_for_tags=
+ :after_remove_for_tags
+ :after_remove_for_tags?
+ :after_remove_for_tags=
+ :autosave_associated_records_for_tags
+ :validate_associated_records_for_tags

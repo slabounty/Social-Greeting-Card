@@ -307,11 +307,12 @@ describe UsersController do
         before(:each) do
             @sender = test_sign_in(Factory(:sender))
             @recipient = Factory(:recipient)
+            @template = Factory(:template)
         end
 
         it "should show the user's sent cards" do
-            card1 = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 1")
-            card2 = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 2")
+            card1 = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 1", :template => @template)
+            card2 = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 2", :template => @template)
             get :show, :id => @sender
             response.should contain(/see sent cards/i)
         end

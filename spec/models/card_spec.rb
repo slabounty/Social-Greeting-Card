@@ -4,8 +4,9 @@ describe Card do
     before(:each) do
         @sender = Factory(:user)
         @recipient = Factory(:user, :email => "example@example.net")
+        @template = Factory(:template)
         @attr = {   :greeting => "Hello World", 
-                    :image_file_name => "card_images/birthday_cake.jpeg", 
+                    :template => @template,
                     :recipient => @recipient }
     end
 

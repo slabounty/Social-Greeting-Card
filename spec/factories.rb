@@ -23,9 +23,17 @@ Factory.sequence :email do |n|
     "person-#{n}@example.com"
 end
 
+Factory.define :template do |template|
+    template.image_name     "birthday_cake.jpeg"
+end
+
 Factory.define :card do |card|
     card.greeting           "Hello World!"
     card.sender             :sender
     card.recipient          :recipient
-    card.image_file_name    "card_images/birthday_cake.jpeg"
+    card.template           :template
+end
+
+Factory.define :tag do |tag|
+    tag.tag                 "congratulations"
 end

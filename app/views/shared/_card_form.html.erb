@@ -13,15 +13,15 @@
     </div>
 
     <h3>Select Card:</h3>
-    <% @image_files.each do |image_file_name| %>
-        <%= image_tag image_file_name, :size => "100x100" %>
-        <%= f.radio_button :image_file_name, image_file_name %>
+    <% @templates.each do |template| %>
+        <%= image_tag "card_images/#{template.image_name}", :size => "100x100" %>
+        <%= f.radio_button :template_id, template.id %>
         <p/>
     <% end %>
 
     <%= f.hidden_field :recipient_id, :value => @card.recipient_id %>
 
     <div class="actions">
-        <%= f.submit "Submit" %>
+        <%= f.submit "Send the Card!" %>
     </div>
 <% end %>

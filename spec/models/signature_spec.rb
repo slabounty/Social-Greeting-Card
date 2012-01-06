@@ -5,7 +5,8 @@ describe Signature do
         @signer = Factory(:user)
         @sender = Factory(:sender)
         @recipient = Factory(:recipient)
-        @card = Factory(:card, :sender => @sender, :recipient => @recipient)
+        @template = Factory(:template)
+        @card = Factory(:card, :sender => @sender, :recipient => @recipient, :template => @template)
         @attr = { :signer_id => @signer.id, :card_id => @card.id, :message => "Congratulations!" }
     end
 

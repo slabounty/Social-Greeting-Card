@@ -5,7 +5,7 @@
         <%= link_to "Sign card for #{card.recipient.first_name}!", { :action => 'sign_card', :card => card } %></p>
     <% end %>
     <%= link_to :controller => :cards, :action => :show_single_card, :card => card do %>
-        <span class="card_image"><%= image_tag card.image_file_name, :size => "200x200" %></span><br/>
+        <span class="card_image"><%= image_tag "card_images/#{card.template.image_name}", :size => "200x200" %></span><br/>
     <% end %>
     <span class="greeting"><%= card.greeting %></span><p/>
     <span class="timestamp">

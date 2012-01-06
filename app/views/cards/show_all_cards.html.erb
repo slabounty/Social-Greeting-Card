@@ -1,9 +1,10 @@
 <h1>Pick a card (any card) and send it to someone!</h1>
 <%= form_tag ("/cards/create_a_card") do %>
 
-    <% @image_files.each do |image_file_name| %>
-        <%=link_to (image_tag image_file_name, :size => "150x150"), "/assets/#{image_file_name}", :class=>"fancybox" %>
-        <%= radio_button_tag 'image_file_name', image_file_name %>
+    <% @templates.each do |template| %>
+        <%=link_to (image_tag "card_images/#{template.image_name}", :size => "150x150"), 
+            "/assets/card_images/#{template.image_name}", :class=>"fancybox" %>
+        <%= radio_button_tag :template_id, template.id %>
     <% end %>
     <br/>
 

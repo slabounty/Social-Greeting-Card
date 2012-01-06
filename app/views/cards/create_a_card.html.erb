@@ -1,5 +1,5 @@
 <h1> Create a Card </h1>
-<%= image_tag @image_file_name, :size => "200x200" %>
+<%= image_tag "card_images/#{@template.image_name}", :size => "200x200" %>
 <%= form_tag ("create_from_image") do %>
 
     <h3>Who's this going to?:</h3>
@@ -14,7 +14,7 @@
     <%= label_tag("Add the signers: ") %><p/>
     <%= text_field_tag(:signers_email)%><p/>
 
-    <%= hidden_field_tag :image_file_name, @image_file_name %>
+    <%= hidden_field_tag :template_id, @template.id %>
 
     <%= submit_tag("Send the card!") %>
 <% end %>

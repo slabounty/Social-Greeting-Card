@@ -17,11 +17,12 @@ describe CardsController do
             @sender = test_sign_in(Factory(:sender))
             @recipient = Factory(:recipient)
             @signer = Factory(:signer)
+            @template = Factory(:template)
         end
 
         describe "failure" do
             before(:each) do
-                @attr = { :greeting => "" }
+                @attr = { :greeting => "", :template_id => @template.id }
             end
 
             it "should not create a card" do
@@ -39,7 +40,7 @@ describe CardsController do
         describe "success" do
             before(:each) do
                 @attr = {   :greeting => "Lorem ipsum", 
-                            :image_file_name => "card_images/birthday_cake.jpeg",
+                            :template_id => @template.id,
                             :recipient_id => @recipient.id, 
                             :signers => "#{@signer.email}" }
             end
@@ -73,6 +74,7 @@ describe CardsController do
             @sender = test_sign_in(Factory(:sender))
             @recipient = Factory(:recipient)
             @signer = Factory(:signer)
+            @template = Factory(:template)
         end
 
         describe "failure" do
@@ -95,7 +97,7 @@ describe CardsController do
         describe "success" do
             before(:each) do
                 @attr = {   :greeting => "Lorem ipsum", 
-                            :image_file_name => "card_images/birthday_cake.jpeg",
+                            :template_id => @template.id,
                             :recipient_email => "#{@recipient.email}", 
                             :signers => "#{@signer.email}" }
             end

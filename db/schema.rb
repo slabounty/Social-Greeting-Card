@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111223200029) do
+ActiveRecord::Schema.define(:version => 20120104225821) do
 
   create_table "cards", :force => true do |t|
     t.string   "greeting"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20111223200029) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"
+    t.integer  "template_id"
   end
 
   create_table "signatures", :force => true do |t|
@@ -27,6 +28,23 @@ ActiveRecord::Schema.define(:version => 20111223200029) do
     t.integer  "card_id"
     t.boolean  "signed",     :default => false
     t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", :force => true do |t|
+    t.text     "tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags_templates", :id => false, :force => true do |t|
+    t.integer "template_id"
+    t.integer "tag_id"
+  end
+
+  create_table "templates", :force => true do |t|
+    t.text     "image_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

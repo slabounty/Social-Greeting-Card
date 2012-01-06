@@ -64,7 +64,7 @@ class UsersController < ApplicationController
     def send_card
         @recipient = User.find(params[:recipient])
         @card = Card.new(:recipient => @recipient)
-        @image_files = Dir.glob("app/assets/images/card_images/*").map { |image_file| image_file.gsub(/app\/assets\/images\//, "")}
+        @templates = Template.find(:all)
     end
 
     def sign_card

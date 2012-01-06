@@ -21,16 +21,30 @@ namespace :db do
                          :email => email,
                          :password => password,
                          :password_confirmation => password)
-
-
         end
 
-        image_files = Dir.glob("app/assets/images/card_images/*").map { |image_file| image_file.gsub(/app\/assets\/images\//, "")}
+        tags = %w[ christmas birthday graduation congratulations ]
+        tags.each do |tag|
+            Tag.create(:tag => tag)
+        end
+
+        # Create the templates.
+        image_files = Dir.glob("app/assets/images/card_images/*").map do |image_file| 
+            image_file.gsub(/app\/assets\/images\/card_images\//, "") 
+        end
+
+        image_files.each do |image_file_name|
+            template = Template.create!(:image_name => image_file_name)
+            template.tags << Tag.find(Random.rand(tags.size) + 1)           # Add a random tag
+            template.save
+        end
+
         User.all(:limit => 30).each do |user|
             10.times do 
+
                 card = user.sent_cards.create!(
                     :greeting => Faker::Lorem.sentence(5)[0..40], 
-                    :image_file_name => image_files[Random.rand(image_files.size)],
+                    :template => Template.find(Random.rand(image_files.size)+1),
                     :recipient => User.find(Random.rand(30)+1))
                 5.times do 
                     sig = Signature.new(:signer_id => User.find(Random.rand(30) + 1).id)

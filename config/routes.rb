@@ -10,7 +10,7 @@ Greeting::Application.routes.draw do
     get  'users/see_need_to_sign'   
     post 'users/do_sign'   
 
-    match '/cards', :to => 'cards#show_all_cards'
+    match '/all_cards', :to => 'cards#show_all_cards'
     get  'cards/show_all_cards'
     get  'cards/show_single_card'
     post 'cards/create_a_card'
