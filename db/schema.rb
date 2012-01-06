@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(:version => 20120104225821) do
     t.integer  "recipient_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image_file_name"
     t.integer  "template_id"
   end
 
