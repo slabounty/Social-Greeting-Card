@@ -67,8 +67,8 @@ describe AdminController do
         describe "success" do
             before(:each) do
                 @attr = {
-                            :template_id => @template.id,
-                            :tags => @tags }
+                    :template_id => @template.id,
+                    :tags => @tags }
             end
 
             it "should create a tag" do
@@ -90,21 +90,16 @@ describe AdminController do
                 end.should change(Tag, :count).by(1)
             end
 
-#
-#            it "should redirect to the user page" do
-#                post :create_from_image, @attr
-#                response.should redirect_to(@admin )
-#            end
-#
-#            it "should have a flash message" do
-#                post :create_from_image, @attr
-#                flash[:success].should =~ /card created/i
-#            end
-#
-#            it "should add a sent card to the admin" do
-#                pre_count = @admin.sent_cards.size
-#                post :create_from_image, :card => @attr
-#                @admin.sent_cards.length.should == pre_count+1
+
+            it "should redirect to the admin page" do
+                post :tag_card_from_image, @attr
+                response.should redirect_to(admin_path)
+            end
+
+#            it "should add a tag to the template" do
+#                pre_count = @template.tags.length
+#                post :tag_card_from_image, @attr
+#                @template.tags.length.should == pre_count+1
 #            end
         end
     end
