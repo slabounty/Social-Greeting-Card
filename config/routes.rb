@@ -1,5 +1,11 @@
 Greeting::Application.routes.draw do
 
+    match '/admin', :to => 'admin#index'
+    get  'admin/index'
+    get  'admin/upload'
+    get  'admin/tag'
+    post 'admin/tag_a_card'
+    post 'admin/tag_card_from_image'
 
     get  'users/send_card'  # This needs to be before the resources :users line below 
                             # otherwise we end up at users/show.

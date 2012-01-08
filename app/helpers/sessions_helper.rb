@@ -16,6 +16,10 @@ module SessionsHelper
         !current_user.nil?
     end
 
+    def admin?
+        signed_in? && current_user.admin?
+    end
+
     def sign_out
         cookies.delete(:remember_token)
         self.current_user = nil
@@ -26,12 +30,16 @@ module SessionsHelper
     end
 
     def authenticate
-        deny_access unless signed_in?
+        deny_access  unless signed_in?
     end
 
-    def deny_access
+    def deny_access(notice = "Please sign in to access this page.")
         store_location
-        redirect_to signin_path, :notice => "Please sign in to access this page."
+        redirect_to signin_path, :notice => notice
+    end
+
+    def admin_authenticate
+        deny_access("Please sign in as an administrator to access this page.") unless admin?
     end
 
     def redirect_back_or(default)

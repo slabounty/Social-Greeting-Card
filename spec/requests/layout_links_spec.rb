@@ -67,4 +67,16 @@ describe "LayoutLinks" do
             response.should have_selector("a", :href => user_path(@user), :content => "Profile")
         end
     end
+
+    describe "when signed in as admin" do
+        before(:each) do
+            @admin = Factory(:admin)
+            integration_sign_in @admin
+        end
+
+        it "should have an admin page" do
+            visit root_path
+            response.should have_selector("a", :href => admin_path, :content => "Admin")
+        end
+    end
 end

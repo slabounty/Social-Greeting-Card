@@ -19,6 +19,10 @@ Factory.define :signer, :parent => :user do |signer|
     signer.email             "signer@example.com"
 end
 
+Factory.define :admin, :parent => :user do |admin|
+    admin.admin             true
+end
+
 Factory.sequence :email do |n|
     "person-#{n}@example.com"
 end

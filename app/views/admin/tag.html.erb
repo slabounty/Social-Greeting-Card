@@ -1,0 +1,12 @@
+<h1>Pick a card (any card) and tag it!</h1>
+<%= form_tag ("/admin/tag_a_card") do %>
+
+    <% @templates.each do |template| %>
+        <%=link_to (image_tag "card_images/#{template.image_name}", :size => "150x150"), 
+            "/assets/card_images/#{template.image_name}", :class=>"fancybox" %>
+        <%= radio_button_tag :template_id, template.id %>
+    <% end %>
+    <br/>
+
+    <%= submit_tag "Tag the card!" %>
+<% end %>

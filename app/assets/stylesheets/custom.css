@@ -296,3 +296,18 @@ ul.cards-menu {
 
 .timestamp {
 }
+
+/* Admin */
+a.admin_button {
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+    width: 190px;
+    color: #fff;
+    background: #006400;
+    font-size: 150%;
+    font-weight: bold;
+    padding: 20px;
+}
+
+
