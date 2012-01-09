@@ -5,3 +5,4 @@ tmp/
 .sass-cache/
 webrat.log
 *.vim
+app/assets/images/card_images/*

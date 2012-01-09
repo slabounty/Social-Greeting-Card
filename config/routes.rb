@@ -3,6 +3,7 @@ Greeting::Application.routes.draw do
     match '/admin', :to => 'admin#index'
     get  'admin/index'
     get  'admin/upload'
+    post 'admin/upload_template'
     get  'admin/tag'
     post 'admin/tag_a_card'
     post 'admin/tag_card_from_image'

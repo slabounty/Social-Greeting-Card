@@ -9,6 +9,24 @@ class AdminController < ApplicationController
     def upload
     end
 
+    def upload_template
+        uploaded_io = params[:template_file_name]
+        if %w[.jpg .jpeg .png].include? File.extname(uploaded_io.original_filename).downcase
+            File.open(Rails.root.join('app', 'assets', 'images', 'card_images', uploaded_io.original_filename), 'wb') do |file|
+                file.write(uploaded_io.read)
+            end
+            template = Template.create(:image_name => uploaded_io.original_filename)
+            if template
+                flash[:success] = "Template created!"
+            else
+                flash[:error] = "Template not created!"
+            end
+        else
+            flash[:error] = "File: \"#{uploaded_io.original_filename}\" is wrong type. Must be an image (jpg, jpeg, png)!"
+        end
+        redirect_to admin_path
+    end
+
     def tag
         @templates = Template.find(:all)
     end
