@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
     
-    before_filter :authenticate, :except => [:show_all_cards]
+    before_filter :authenticate, :except => [:show_all_cards, :search]
 
     def create
         recipient = User.find_by_id(params[:card][:recipient_id].to_i)
@@ -30,6 +30,22 @@ class CardsController < ApplicationController
 
     def show_single_card
         @card = Card.find(params[:card])
+    end
+
+    def search
+        @search_string = params[:search]
+        # @templates = tags.templates if tags = Tag.find_by_tag(@search_string)
+
+        tag = Tag.find(:first, :conditions => ["lower(tag) = ?", @search_string.downcase])
+        if tag != nil && tag != []
+            @templates = tag.templates
+        end
+        if @templates
+            flash.now[:success] = "Showing cards with #{@search_string}:"
+        else
+            flash.now[:error] = "Sorry, no cards with #{@search_string}:"
+        end
+        render 'cards/show_all_cards'
     end
 
     private

@@ -7,7 +7,7 @@ describe "FriendlyForwardings" do
         # The test automatically follows the redirect ot the signin page
         fill_in :email, :with => user.email
         fill_in :password, :with => user.password
-        click_button
+        click_button "Sign in"
         # The test follows the redirect again, this time to users/edit.
         response.should render_template('users/edit')
     end

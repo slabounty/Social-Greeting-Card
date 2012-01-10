@@ -22,6 +22,7 @@ Greeting::Application.routes.draw do
     get  'cards/show_single_card'
     post 'cards/create_a_card'
     post 'cards/create_from_image'   
+    get  'cards/search'   
 
     resources :users
     resources :sessions, :only => [:new, :create, :destroy]

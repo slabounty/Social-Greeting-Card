@@ -1,14 +1,16 @@
 <h1>Pick a card (any card) and send it to someone!</h1>
 <%= form_tag ("/cards/create_a_card") do %>
 
-    <% @templates.each do |template| %>
-        <%=link_to (image_tag "card_images/#{template.image_name}", :size => "150x150"), 
-        "/assets/card_images/#{template.image_name}", :class=>"fancybox",
-        :title => "Tagged with: #{template.tags.inject("") { |s, t| s << ' ' << t.tag } }" 
-    %>
-        <%= radio_button_tag :template_id, template.id %>
-    <% end %>
-    <br/>
+    <% if @templates %>
+        <% @templates.each do |template| %>
+            <%=link_to (image_tag "card_images/#{template.image_name}", :size => "150x150"), 
+            "/assets/card_images/#{template.image_name}", :class=>"fancybox",
+            :title => "Tagged with: #{template.tags.inject("") { |s, t| s << ' ' << t.tag } }" 
+        %>
+            <%= radio_button_tag :template_id, template.id %>
+        <% end %>
+        <br/>
 
-    <%= submit_tag "Finish the card!" %>
+        <%= submit_tag "Finish the card!" %>
+    <% end %>
 <% end %>
