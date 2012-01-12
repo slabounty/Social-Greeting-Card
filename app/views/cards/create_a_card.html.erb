@@ -2,7 +2,7 @@
 <%= image_tag "card_images/#{@template.image_name}", :size => "200x200" %>
 <%= form_tag ("create_from_image") do %>
 
-    <h3>Who's this going to?:</h3>
+    <h3>Who's this going to (put in their email address)?:</h3>
     <%= label_tag("Add the recipient: ") %><p/>
     <%= text_field_tag(:recipient_email)%><p/>
 
@@ -10,7 +10,7 @@
     <%= label_tag("Add A Greeting: ") %><p/>
     <%= text_field_tag(:greeting)%><p/>
 
-    <h3>Add The People you want to sign the card:</h3>
+    <h3>Add The People you want to sign the card (put in their email addresses, comma separated):</h3>
     <%= label_tag("Add the signers: ") %><p/>
     <%= text_field_tag(:signers_email)%><p/>
 

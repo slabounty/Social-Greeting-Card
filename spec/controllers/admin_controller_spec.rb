@@ -96,11 +96,6 @@ describe AdminController do
                 response.should redirect_to(admin_path)
             end
 
-#            it "should add a tag to the template" do
-#                pre_count = @template.tags.length
-#                post :tag_card_from_image, @attr
-#                @template.tags.length.should == pre_count+1
-#            end
         end
     end
 
