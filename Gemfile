@@ -5,6 +5,7 @@ gem 'gravatar_image_tag', '0.1.0'
 gem 'jquery-rails'
 gem 'fancybox-rails'
 gem 'will_paginate', '3.0'
+gem 'pony', '1.4'
 
 group :development do
   gem 'sqlite3'

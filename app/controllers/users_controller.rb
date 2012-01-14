@@ -17,6 +17,8 @@ class UsersController < ApplicationController
         @user = User.new(params[:user])
         if @user.save
             sign_in @user
+            email(@user.email, "Welcome to Greeting Social", 
+                  "Congratulations! You've successfully completed the registration process for Greeting Social.")
             flash[:success] = "Welcome to Greeting Social!"
             redirect_to @user
         else

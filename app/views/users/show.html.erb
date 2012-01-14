@@ -9,25 +9,25 @@
             <% if current_user?(@user) %>
                 <%= link_to "Send a Card!", users_path, :class => "sendcard_button round" %>
                 <ul class="cards-menu">
-                <% unless @user.received_cards.empty? %>
+                <% unless @received_cards.empty? %>
                     <li>
                     <%= link_to "See received cards!", { :action => 'see_received', :id => @user.id }, 
                         :class => "sendcard_button round" %>
                     </li>
                 <% end %>
-                <% unless @user.sent_cards.empty? %>
+                <% unless @sent_cards.empty? %>
                     <li>
                     <%= link_to "See sent cards!", { :action => 'see_sent', :id => @user.id }, 
                         :class => "sendcard_button round" %>
                     </li>
                 <% end %>
-                <% unless @user.signed_cards.empty? %>
+                <% unless @need_to_sign_cards.empty? %>
                     <li>
                     <%= link_to "See cards to sign!", { :action => 'see_need_to_sign', :id => @user.id }, 
                         :class => "sendcard_button round" %>
                     </li>
                 <% end %>
-                <% unless @user.signed_cards.empty? %>
+                <% unless @already_signed_cards.empty? %>
                     <li>
                     <%= link_to "See the cards you've signed!", { :action => 'see_signed', :id => @user.id }, 
                         :class => "sendcard_button round" %>

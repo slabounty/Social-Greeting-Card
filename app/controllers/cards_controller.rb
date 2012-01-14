@@ -63,6 +63,16 @@ class CardsController < ApplicationController
             end
 
             if card.save
+                email(recipient.email, "You've got a Card!", 
+                      "Congratulations! You've got a card waiting at Greeting Social " << 
+                      " from #{current_user.first_name} #{current_user.last_name}")
+                card.signers.each do |u|
+                    email(recipient.email, "You've got a card to sign!", 
+                        "Congratulations! You've got a card waiting to sign at Greeting Social" <<
+                        " from #{current_user.first_name} #{current_user.last_name} " << 
+                        " to #{recipient.first_name} #{recipient.last_name}")
+                end
+
                 flash[:success] = "Card created and signers added (if there were any)!"
                 redirect_to current_user
             else
