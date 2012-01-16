@@ -36,6 +36,7 @@ Factory.define :card do |card|
     card.sender             :sender
     card.recipient          :recipient
     card.template           :template
+    card.hash_value         "abcdef123456"
 end
 
 Factory.define :tag do |tag|

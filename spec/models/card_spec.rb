@@ -7,7 +7,9 @@ describe Card do
         @template = Factory(:template)
         @attr = {   :greeting => "Hello World", 
                     :template => @template,
-                    :recipient => @recipient }
+                    :recipient => @recipient,
+                    :hash_value => "abcdef123456"
+                }
     end
 
     it "should create a new instance given valid attributes" do

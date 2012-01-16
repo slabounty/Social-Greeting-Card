@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120104225821) do
+ActiveRecord::Schema.define(:version => 20120115211820) do
 
   create_table "cards", :force => true do |t|
     t.string   "greeting"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20120104225821) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "template_id"
+    t.string   "hash_value"
   end
 
   create_table "signatures", :force => true do |t|

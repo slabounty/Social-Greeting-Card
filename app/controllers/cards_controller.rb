@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
     
-    before_filter :authenticate, :except => [:show_all_cards, :search]
+    before_filter :authenticate, :except => [:show_all_cards, :search, :show_card_from_email]
 
     def create
         recipient = User.find_by_id(params[:card][:recipient_id].to_i)
@@ -30,6 +30,12 @@ class CardsController < ApplicationController
 
     def show_single_card
         @card = Card.find(params[:card])
+        render :not_your_card if @card.recipient != current_user
+    end
+
+    def show_card_from_email
+        puts "show_card_from_email: h = #{params[:h]}"
+        @card = Card.find_by_hash_value(params[:h])
     end
 
     def search
@@ -51,7 +57,14 @@ class CardsController < ApplicationController
     private
 
     def create_card_from_recipient_greeting_template_signers(recipient, greeting, template, signers)
+
         card = current_user.sent_cards.build(:greeting => greeting, :recipient => recipient, :template => template)
+
+        # Add a hash to the card for sending to a user. This should probably
+        # use a SHA256 type hash, but that causes some issues with (at least)
+        # sqlite3 converting it to a blob in the database (64 characters).
+        # This should be OK for small applications.
+        card.hash_value = "#{Time.now}/#{card.id}".hash
 
         if card.save
             if signers != nil
@@ -65,13 +78,17 @@ class CardsController < ApplicationController
             if card.save
                 email(recipient.email, "You've got a Card!", 
                       "Congratulations! You've got a card waiting at Greeting Social " << 
-                      " from #{current_user.first_name} #{current_user.last_name}")
+                      " from #{current_user.first_name} #{current_user.last_name}\n" <<
+                      "It can be viewed at\n" <<
+                      "#{url_for(:only_path => false).gsub(action_name, "")}show_card_from_email?h=#{card.hash_value}\n"
+                     )
                 card.signers.each do |u|
                     email(recipient.email, "You've got a card to sign!", 
                         "Congratulations! You've got a card waiting to sign at Greeting Social" <<
                         " from #{current_user.first_name} #{current_user.last_name} " << 
                         " to #{recipient.first_name} #{recipient.last_name}")
                 end
+
 
                 flash[:success] = "Card created and signers added (if there were any)!"
                 redirect_to current_user
