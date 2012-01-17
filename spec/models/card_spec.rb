@@ -54,4 +54,5 @@ describe Card do
             @sender.sent_cards.build(:content => "a" * 150).should_not be_valid
         end
     end
+
 end

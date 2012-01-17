@@ -20,7 +20,15 @@ class CardsController < ApplicationController
     end
 
     def create_from_image
-        recipient = User.find_by_email(params[:recipient_email])
+        # Create a "fake" user that's inactive if there's no user with that
+        # email address.
+        recipient = User.find_or_create_by_email(params[:recipient_email],
+            { :password => 'password',
+            :password_confirmation => 'password',
+            :first_name => 'First',
+            :last_name => 'Last',
+            :active => false})
+
         greeting = params[:greeting]
         signers = params[:signers_email].split(",").map { |s| s.strip } if params[:signers_email] != nil
         template = Template.find_by_id(params[:template_id].to_i)

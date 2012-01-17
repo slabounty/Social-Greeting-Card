@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     has_many :signed_cards, :through => :signatures, :source => :card 
 
     attr_accessor :password
-    attr_accessible :first_name, :last_name, :email, :password, :password_confirmation
+    attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :active
 
     email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
     validates :password, :presence => true,
         :confirmation => true,
         :length => { :within => 6..40 }
+#    validates :active, :presence => true
 
     before_save :encrypt_password
 

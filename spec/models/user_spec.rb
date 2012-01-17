@@ -151,6 +151,25 @@ describe User do
         end
     end
 
+    describe "active attribute" do
+        before(:each) do
+            @user = User.create!(@attr)
+        end
+
+        it "should respond to active" do
+            @user.should respond_to(:active)
+        end
+
+        it "should be active by default" do
+            @user.should be_active
+        end
+
+        it "should be convertible to inactive" do
+            @user.toggle!(:active)
+            @user.should_not be_active
+        end
+    end
+
     describe "cards associations" do
         
         before(:each) do

@@ -16,11 +16,16 @@ class UsersController < ApplicationController
     def create
         @user = User.new(params[:user])
         if @user.save
-            sign_in @user
-            email(@user.email, "Welcome to Greeting Social", 
-                  "Congratulations! You've successfully completed the registration process for Greeting Social.")
-            flash[:success] = "Welcome to Greeting Social!"
-            redirect_to @user
+            new_user_success(@user)
+        elsif  ((inactive_user = User.find_by_email(params[:user][:email])) != nil) && (inactive_user.active == false)
+            inactive_user.first_name = params[:user][:first_name]
+            inactive_user.last_name = params[:user][:last_name]
+            inactive_user.password = params[:user][:password]
+            inactive_user.password_confirmation = params[:user][:password_confirmation]
+            inactive_user.active = true
+            if inactive_user.save
+                new_user_success(inactive_user)
+            end
         else
             @title = "Sign up"
             render 'new'
@@ -116,5 +121,13 @@ class UsersController < ApplicationController
 
     def admin_user
         redirect_to(root_path) unless current_user.admin?
+    end
+
+    def new_user_success(user)
+        sign_in user
+        email(user.email, "Welcome to Greeting Social", 
+              "Congratulations! You've successfully completed the registration process for Greeting Social.")
+        flash[:success] = "Welcome to Greeting Social!"
+        redirect_to user
     end
 end
