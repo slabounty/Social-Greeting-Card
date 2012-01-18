@@ -38,7 +38,8 @@ class CardsController < ApplicationController
 
     def show_single_card
         @card = Card.find(params[:card])
-        render :not_your_card if @card.recipient != current_user
+        render :not_your_card if (@card.recipient != current_user) && (@card.sender != current_user) &&
+            !@card.signers.include?(current_user)
     end
 
     def show_card_from_email

@@ -45,7 +45,8 @@ namespace :db do
                 card = user.sent_cards.create!(
                     :greeting => Faker::Lorem.sentence(5)[0..40], 
                     :template => Template.find(Random.rand(image_files.size)+1),
-                    :recipient => User.find(Random.rand(30)+1))
+                    :recipient => User.find(Random.rand(30)+1),
+                    :hash_value => "#{Time.now}#{Faker::Lorem.sentence(5)[0..40]}".hash)
                 5.times do 
                     sig = Signature.new(:signer_id => User.find(Random.rand(30) + 1).id)
                     if Random.rand(2) == 1
