@@ -31,6 +31,19 @@ class User < ActiveRecord::Base
         encrypted_password == encrypt(submitted_password)
     end
 
+    def display_name
+        active == true ? "#{first_name} #{last_name}" : email
+    end
+
+    def self.find_or_create_inactive_by_email(email_address)
+        User.find_or_create_by_email(email_address,
+            { :password => 'password',
+            :password_confirmation => 'password',
+            :first_name => 'First',
+            :last_name => 'Last',
+            :active => false})
+    end
+
     def self.authenticate(email, submitted_password)
         user = find_by_email(email)
         return nil if user.nil?

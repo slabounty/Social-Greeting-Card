@@ -16,9 +16,27 @@ describe UsersController do
 
     end
 
-    describe "GET 'show'" do
+    describe "GET 'show' for a not logged in user" do
         before(:each) do
             @user = Factory(:user)
+        end
+
+        it "should not be successful" do
+            get :show, :id => @user
+            response.should_not be_success
+        end
+
+        it "should redirect to the sign in page" do
+            get :show, :id => @user
+            response.should redirect_to(signin_path)
+        end
+
+    end
+
+    describe "GET 'show' for a logged in user" do
+        before(:each) do
+            @user = Factory(:user)
+            test_sign_in(@user)
         end
 
         it "should be successful" do

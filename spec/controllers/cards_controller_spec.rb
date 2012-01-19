@@ -126,4 +126,61 @@ describe CardsController do
         end
     end
 
+    describe "show_single_card" do
+        before do
+            @sender = Factory(:sender)
+            @recipient = Factory(:recipient)
+            @template = Factory(:template)
+            @card = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 1", :template => @template)
+        end
+
+        describe "failure" do
+            before(:each) do
+                @attr = { :card => @card.id }
+                @user = Factory(:user)
+            end
+
+            it "should display a not your card" do
+                test_sign_in(@user)
+                get 'show_single_card', :card => @card.id
+                response.should have_selector('h1', :content => "Sorry")
+            end
+
+        end
+
+        describe "success" do
+            before(:each) do
+                @attr = { :card => @card.id }
+            end
+
+            it "should display the card for the recipient" do
+                test_sign_in(@recipient)
+                get 'show_single_card', :card => @card.id
+                response.should have_selector('title', :content => "Single Card")
+            end
+
+            it "should display the card for the sender" do
+                test_sign_in(@sender)
+                get 'show_single_card', :card => @card.id
+                response.should have_selector('title', :content => "Single Card")
+            end
+        end
+    
+    end
+
+    describe "show_card_from_email" do
+        before do
+            @sender = Factory(:sender)
+            @recipient = Factory(:recipient)
+            @template = Factory(:template)
+            @card = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 1", :template => @template)
+        end
+
+        it "should display the card" do
+            get 'show_card_from_email', :h => @card.hash_value
+            response.should have_selector('title', :content => "Single Card from Email")
+        end
+    
+    end
+
 end

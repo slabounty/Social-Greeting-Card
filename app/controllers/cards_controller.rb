@@ -20,14 +20,9 @@ class CardsController < ApplicationController
     end
 
     def create_from_image
-        # Create a "fake" user that's inactive if there's no user with that
-        # email address.
-        recipient = User.find_or_create_by_email(params[:recipient_email],
-            { :password => 'password',
-            :password_confirmation => 'password',
-            :first_name => 'First',
-            :last_name => 'Last',
-            :active => false})
+        # Create a "fake" user that's inactive if there's not a user with 
+        # this email.
+        recipient = User.find_or_create_inactive_by_email(params[:recipient_email])
 
         greeting = params[:greeting]
         signers = params[:signers_email].split(",").map { |s| s.strip } if params[:signers_email] != nil
@@ -37,14 +32,15 @@ class CardsController < ApplicationController
     end
 
     def show_single_card
+        @title = "Single Card"
         @card = Card.find(params[:card])
-        render :not_your_card if (@card.recipient != current_user) && (@card.sender != current_user) &&
-            !@card.signers.include?(current_user)
+        render :not_your_card if @card.recipient != current_user
     end
 
     def show_card_from_email
-        puts "show_card_from_email: h = #{params[:h]}"
+        @title = "Single Card from Email"
         @card = Card.find_by_hash_value(params[:h])
+        render :show_single_card
     end
 
     def search

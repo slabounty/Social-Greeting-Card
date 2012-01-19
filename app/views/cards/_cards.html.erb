@@ -1,23 +1,21 @@
-<li>
+<% if card.recipient.active == true %>
+    <span class="to">To: <%= link_to "#{card.recipient.display_name}", user_path(card.recipient) %></span><br/>
+<% else %>
+    <span class="to">To: <%= "#{card.recipient.display_name}" %></span><br/>
+<% end %>
+<span class="from">From: <%= link_to "#{card.sender.display_name}" , user_path(card.sender)%></span><br/>
+<% if display_type == :need_to_sign %>
     <% if card.recipient.active == true %>
-        <span class="to">To: <%= link_to "#{card.recipient.first_name} #{card.recipient.last_name}", user_path(card.recipient) %></span><br/>
+        <%= link_to "Sign card for #{card.recipient.display_name}!", { :action => 'sign_card', :card => card } %></p>
     <% else %>
-        <span class="to">To: <%= "#{card.recipient.email}" %></span><br/>
+        <%= link_to "Sign card for #{card.recipient.display_name}!", { :action => 'sign_card', :card => card } %></p>
     <% end %>
-    <span class="from">From: <%= link_to "#{card.sender.first_name} #{card.sender.last_name}" , user_path(card.sender)%></span><br/>
-    <% if display_type == :need_to_sign %>
-        <% if card.recipient.active == true %>
-            <%= link_to "Sign card for #{card.recipient.first_name}!", { :action => 'sign_card', :card => card } %></p>
-        <% else %>
-            <%= link_to "Sign card for #{card.recipient.email}!", { :action => 'sign_card', :card => card } %></p>
-        <% end %>
-    <% end %>
-    <%= link_to :controller => :cards, :action => :show_single_card, :card => card do %>
-        <span class="card_image"><%= image_tag "card_images/#{card.template.image_name}", :size => "200x200" %></span><br/>
-    <% end %>
-    <span class="greeting"><%= card.greeting %></span><p/>
-    <span class="timestamp">
-        Created <%= time_ago_in_words(card.created_at) %> ago.
-    </span>
-</li>
+<% end %>
+<%= link_to :controller => :cards, :action => :show_single_card, :card => card do %>
+    <span class="card_image"><%= image_tag "card_images/#{card.template.image_name}", :size => "200x200" %></span><br/>
+<% end %>
+<span class="greeting"><%= card.greeting %></span><p/>
+<span class="timestamp">
+    Created <%= time_ago_in_words(card.created_at) %> ago.
+</span>
 <hr/>
