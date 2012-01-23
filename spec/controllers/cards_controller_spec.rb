@@ -66,6 +66,14 @@ describe CardsController do
                 post :create, :card => @attr
                 @sender.sent_cards.length.should == pre_count+1
             end
+
+            it "should send an email to the recipient" do
+                post :create, :card => @attr
+                Pony.should_receive(:mail) do |params|
+                    params[:to].should == @recipient.email
+                    params[:body].should include("Congratulations")
+                end
+            end
         end
     end
 
@@ -122,6 +130,14 @@ describe CardsController do
                 pre_count = @sender.sent_cards.size
                 post :create_from_image, :card => @attr
                 @sender.sent_cards.length.should == pre_count+1
+            end
+
+            it "should send an email to the recipient" do
+                post :create, :card => @attr
+                Pony.should_receive(:mail) do |params|
+                    params[:to].should == @recipient.email
+                    params[:body].should include("Congratulations")
+                end
             end
         end
     end

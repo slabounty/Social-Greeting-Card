@@ -21,8 +21,8 @@ class User < ActiveRecord::Base
     validates :password, :presence => true,
         :confirmation => true,
         :length => { :within => 6..40 }
-#    validates :active, :presence => true
 
+    before_create :add_hash_value
     before_save :encrypt_password
 
     def has_password?(submitted_password)
@@ -56,6 +56,10 @@ class User < ActiveRecord::Base
     end
 
     private
+
+    def add_hash_value
+        self.hash_value = email.hash
+    end
 
     def encrypt_password
         self.salt = make_salt if new_record?

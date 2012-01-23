@@ -25,6 +25,10 @@ RSpec.configure do |config|
     # instead of true.
     config.use_transactional_fixtures = true
 
+    config.before(:each) do
+        do_not_send_email
+    end
+
     def test_sign_in(user)
         controller.sign_in(user)
     end
@@ -34,5 +38,9 @@ RSpec.configure do |config|
         fill_in "Email", :with => user.email
         fill_in "Password", :with => user.password
         click_button "Sign in"
+    end
+
+    def do_not_send_email
+        Pony.stub!(:deliver) # Hijack to not send email.
     end
 end

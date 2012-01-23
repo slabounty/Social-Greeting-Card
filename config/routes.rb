@@ -11,6 +11,7 @@ Greeting::Application.routes.draw do
     get  'users/send_card'  # This needs to be before the resources :users line below 
                             # otherwise we end up at users/show.
     get  'users/sign_card'   
+    get  'users/sign_card_from_email'   
     get  'users/see_received'   
     get  'users/see_sent'   
     get  'users/see_signed'   

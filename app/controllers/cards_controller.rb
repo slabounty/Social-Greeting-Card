@@ -34,7 +34,7 @@ class CardsController < ApplicationController
     def show_single_card
         @title = "Single Card"
         @card = Card.find(params[:card])
-        render :not_your_card if @card.recipient != current_user
+        render :not_your_card if @card.recipient != current_user && @card.sender != current_user && !@card.signers.include?(current_user)
     end
 
     def show_card_from_email
@@ -65,35 +65,12 @@ class CardsController < ApplicationController
 
         card = current_user.sent_cards.build(:greeting => greeting, :recipient => recipient, :template => template)
 
-        # Add a hash to the card for sending to a user. This should probably
-        # use a SHA256 type hash, but that causes some issues with (at least)
-        # sqlite3 converting it to a blob in the database (64 characters).
-        # This should be OK for small applications.
-        card.hash_value = "#{Time.now}/#{card.id}".hash
-
         if card.save
-            if signers != nil
-                signers.each do |s|
-                    if (u = User.find_by_email(s)) != nil
-                        card.signers << u
-                    end
-                end
-            end
+            add_signers_to_card(card, signers) if signers != nil
 
             if card.save
-                email(recipient.email, "You've got a Card!", 
-                      "Congratulations! You've got a card waiting at Greeting Social " << 
-                      " from #{current_user.first_name} #{current_user.last_name}\n" <<
-                      "It can be viewed at\n" <<
-                      "#{url_for(:only_path => false).gsub(action_name, "")}show_card_from_email?h=#{card.hash_value}\n"
-                     )
-                card.signers.each do |u|
-                    email(recipient.email, "You've got a card to sign!", 
-                        "Congratulations! You've got a card waiting to sign at Greeting Social" <<
-                        " from #{current_user.first_name} #{current_user.last_name} " << 
-                        " to #{recipient.first_name} #{recipient.last_name}")
-                end
-
+                email_recipient(card)
+                email_signers(card) if signers != nil
 
                 flash[:success] = "Card created and signers added (if there were any)!"
                 redirect_to current_user
@@ -105,6 +82,34 @@ class CardsController < ApplicationController
         else
             flash.now[:error] = "Card not created!"
             render 'pages/home'
+        end
+    end
+
+    def add_signers_to_card(card, signers)
+        signers.each do |s|
+            if (u = User.find_or_create_inactive_by_email(s)) != nil
+                card.signers << u
+            end
+        end
+    end
+
+    def email_recipient(card)
+        email(card.recipient.email, "You've got a Card!", 
+              "Congratulations! You've got a card waiting at Greeting Social " << 
+        " from #{card.sender.first_name} #{card.sender.last_name}\n" <<
+        "It can be viewed at\n" <<
+        "#{url_for(:only_path => false).gsub(action_name, "")}show_card_from_email?h=#{card.hash_value}\n")
+    end
+
+    def email_signers(card)
+        card.signers.each do |signer|
+            email(signer.email, "You've got a card to sign!", 
+                  "Congratulations! You've got a card waiting to sign at Greeting Social\n" <<
+            " from #{card.sender.first_name} #{card.sender.last_name} " << 
+            " to #{card.recipient.first_name} #{card.recipient.last_name}\n" <<
+            "It can be signed at\n" <<
+            "#{url_for(:only_path => false).gsub(controller_name, "").gsub(action_name, "").gsub(/\/+$/, "/")}" <<
+            "users/sign_card_from_email?h=#{card.hash_value}&s=#{signer.hash_value}\n")
         end
     end
 

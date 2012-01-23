@@ -115,6 +115,14 @@ describe UsersController do
                 post :create, :user => @attr
                 controller.should be_signed_in
             end
+
+            it "should send a greeting email" do
+                post :create, :user => @attr
+                Pony.should_receive(:mail) do |params|
+                    params[:to].should == "nuser@gmail.com"
+                    params[:body].should include("Congratulations")
+                end
+            end
         end
     end
 

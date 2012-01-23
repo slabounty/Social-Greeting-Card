@@ -1,4 +1,4 @@
-<h1>Sign Card for <%= @card.recipient.first_name %> <%= @card.recipient.last_name %></h1>
+<h1>Sign Card for <%= @card.recipient.display_name %></h1>
 
 <%= render :partial => 'cards/cardbases', :locals => {:card => @card, :display_type => :signed} %>
 
@@ -6,6 +6,7 @@
     <%= label_tag("Add A Message: ") %><p/>
     <%= text_field_tag(:message) %><p/>
     <%= hidden_field_tag :card, @card.id %>
+    <%= hidden_field_tag :signer, @signer.id %>
     <%= submit_tag("Submit") %>
 
 <% end %>

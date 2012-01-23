@@ -76,17 +76,25 @@ class UsersController < ApplicationController
 
     def sign_card
         @card = Card.find(params[:card])
+        @signer = current_user
+    end
+
+    def sign_card_from_email
+        @card = Card.find_by_hash_value(params[:h])
+        @signer = User.find_by_hash_value(params[:s])
+        render 'sign_card'
     end
 
     def do_sign
         card = Card.find(params[:card])
-        signature = Signature.where(:card_id => card, :signer_id => current_user).limit(1)[0]
+        signer = User.find(params[:signer])
+        signature = Signature.where(:card_id => card, :signer_id => signer).limit(1)[0]
         signature.signed = true
         signature.message = params[:message]
         signature.save
 
         flash[:success] = "Card Signed!!"
-        redirect_to current_user
+        signed_in? ? redirect_to(current_user) : redirect_to(root_path)
     end
 
     def sign
