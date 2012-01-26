@@ -20,15 +20,41 @@ class CardsController < ApplicationController
     end
 
     def create_from_image
-        # Create a "fake" user that's inactive if there's not a user with 
-        # this email.
-        recipient = User.find_or_create_inactive_by_email(params[:recipient_email])
 
-        greeting = params[:greeting]
-        signers = params[:signers_email].split(",").map { |s| s.strip } if params[:signers_email] != nil
-        template = Template.find_by_id(params[:template_id].to_i)
+        if params[:commit] =~ /Preview/
+            puts "Previewing!!"
 
-        create_card_from_recipient_greeting_template_signers(recipient, greeting, template, signers)
+            @sender = current_user
+            @recipient_email = params[:recipient_email]
+            @greeting = params[:greeting]
+            @template = Template.find_by_id(params[:template_id].to_i)
+            @signers = params[:signers_email]
+
+            render 'preview'
+
+        else # params[:commit] =~ /Send/
+            send_card(params[:recipient_email], params[:greeting], params[:signers_email], params[:template_id].to_i)
+        end
+    end
+
+    def from_preview
+
+        # :sender_id
+        # :recipient_email
+        # :greeting
+        # :template_id
+        # :signers
+
+        if params[:commit] =~ /Edit/
+            # Re-edit
+            @template = Template.find_by_id(params[:template_id].to_i)
+            @greeting = params[:greeting]
+            @recipient_email = params[:recipient_email]
+            @signers = params[:signers]
+            render 'create_a_card'
+        else
+            send_card(params[:recipient_email], params[:greeting], params[:signers], params[:template_id].to_i)
+        end
     end
 
     def show_single_card
@@ -60,6 +86,15 @@ class CardsController < ApplicationController
     end
 
     private
+
+    def send_card(recipient_email, greeting, signers_emails, template_id)
+
+        recipient = User.find_or_create_inactive_by_email(recipient_email)
+        signers = signers_emails.split(",").map { |s| s.strip } if signers_emails != nil
+        template = Template.find_by_id(template_id)
+
+        create_card_from_recipient_greeting_template_signers(recipient, greeting, template, signers)
+    end
 
     def create_card_from_recipient_greeting_template_signers(recipient, greeting, template, signers)
 

@@ -24,6 +24,7 @@ Greeting::Application.routes.draw do
     get  'cards/show_card_from_email'
     post 'cards/create_a_card'
     post 'cards/create_from_image'   
+    post 'cards/from_preview'   
     get  'cards/search'   
 
     resources :users

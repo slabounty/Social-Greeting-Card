@@ -1,0 +1,14 @@
+<span class="to">To: <%= "#{@recipient_email}" %></span><br/>
+<span class="from">From: <%= link_to "#{@sender.display_name}" , user_path(@sender)%></span><br/>
+<span class="card_image"><%= image_tag  "card_images/#{@template.image_name}" %></span><br/>
+<span class="greeting"><%= @greeting %></span><p/>
+
+<%= form_tag ("from_preview") do %>
+    <%= hidden_field_tag :sender_id, @sender.id %>
+    <%= hidden_field_tag :recipient_email, @recipient_email %>
+    <%= hidden_field_tag :greeting, @greeting %>
+    <%= hidden_field_tag :template_id, @template.id %>
+    <%= hidden_field_tag :signers, @signers %>
+    <%= submit_tag("Edit card some more") %>
+    <%= submit_tag("Send the card!") %>
+<% end %>

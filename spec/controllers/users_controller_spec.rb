@@ -117,12 +117,13 @@ describe UsersController do
             end
 
             it "should send a greeting email" do
-                post :create, :user => @attr
-                Pony.should_receive(:mail) do |params|
-                    params[:to].should == "nuser@gmail.com"
-                    params[:body].should include("Congratulations")
+                Pony.should_receive(:deliver) do |mail|
+                    mail.to.should == [ 'nuser@gmail.com' ]
+                    mail.body.should =~ /congratulations/i
                 end
+                post :create, :user => @attr
             end
+
         end
     end
 

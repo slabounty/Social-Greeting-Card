@@ -67,12 +67,12 @@ describe CardsController do
                 @sender.sent_cards.length.should == pre_count+1
             end
 
-            it "should send an email to the recipient" do
-                post :create, :card => @attr
-                Pony.should_receive(:mail) do |params|
-                    params[:to].should == @recipient.email
-                    params[:body].should include("Congratulations")
+            it "should send an email to the recipient1" do
+                Pony.should_receive(:deliver) do |mail|
+                    mail.to.should == [ "#{@recipient.email}" ]
+                    mail.body.should =~ /congratulations/i
                 end
+                post :create, :card => @attr
             end
         end
     end
@@ -107,7 +107,8 @@ describe CardsController do
                 @attr = {   :greeting => "Lorem ipsum", 
                             :template_id => @template.id,
                             :recipient_email => "#{@recipient.email}", 
-                            :signers => "#{@signer.email}" }
+                            :signers => "#{@signer.email}",
+                            :commit => "Send" }
             end
 
             it "should create a card" do
@@ -128,16 +129,16 @@ describe CardsController do
 
             it "should add a sent card to the sender" do
                 pre_count = @sender.sent_cards.size
-                post :create_from_image, :card => @attr
+                post :create_from_image, @attr
                 @sender.sent_cards.length.should == pre_count+1
             end
 
-            it "should send an email to the recipient" do
-                post :create, :card => @attr
-                Pony.should_receive(:mail) do |params|
-                    params[:to].should == @recipient.email
-                    params[:body].should include("Congratulations")
+            it "should send an email to the recipient4" do
+                Pony.should_receive(:deliver) do |mail|
+                    mail.to.should == [ "#{@recipient.email}" ]
+                    mail.body.should =~ /congratulations/i
                 end
+                post :create_from_image, @attr
             end
         end
     end
