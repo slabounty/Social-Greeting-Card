@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     def index
         @title = "All users"
         @suggestion = "Pick someone and send them a card!"
-        @users = User.paginate(:page => params[:page])
+        @users = User.where(:active => true).paginate(:page => params[:page])
     end
 
     def show
