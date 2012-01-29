@@ -310,3 +310,17 @@ a.admin_button {
     padding: 20px;
 }
 
+
+/* Autocomplete */
+ul.ui-autocomplete {
+    background: #cff;
+    width: 340px;
+    list-style-type: none;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+ul.ui-autocomplete li {
+}

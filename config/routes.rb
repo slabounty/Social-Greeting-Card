@@ -8,6 +8,7 @@ Greeting::Application.routes.draw do
     post 'admin/tag_a_card'
     post 'admin/tag_card_from_image'
 
+    get  'users/index'   
     get  'users/send_card'  # This needs to be before the resources :users line below 
                             # otherwise we end up at users/show.
     get  'users/sign_card'   
