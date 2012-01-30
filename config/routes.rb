@@ -1,36 +1,42 @@
 Greeting::Application.routes.draw do
 
     match '/admin', :to => 'admin#index'
-    get  'admin/index'
-    get  'admin/upload'
-    post 'admin/upload_template'
-    get  'admin/tag'
-    post 'admin/tag_a_card'
-    post 'admin/tag_card_from_image'
+    scope :path => '/admin', :controller => :admin do
+        get  'index'
+        get  'upload'
+        post 'upload_template'
+        get  'tag'
+        post 'tag_a_card'
+        post 'tag_card_from_image'
+    end
 
-    get  'users/index'   
-    get  'users/send_card'  # This needs to be before the resources :users line below 
-                            # otherwise we end up at users/show.
-    get  'users/sign_card'   
-    get  'users/sign_card_from_email'   
-    get  'users/see_received'   
-    get  'users/see_sent'   
-    get  'users/see_signed'   
-    get  'users/see_need_to_sign'   
-    post 'users/do_sign'   
+    scope :path => '/users', :controller => :users do
+        get  'index'   
+        get  'send_card'  # This needs to be before the resources :users line below 
+        # otherwise we end up at users/show.
+        get  'sign_card'   
+        get  'sign_card_from_email'   
+        get  'see_received'   
+        get  'see_sent'   
+        get  'see_signed'   
+        get  'see_need_to_sign'   
+        post 'do_sign'   
+    end
+    resources :users
 
     match '/all_cards', :to => 'cards#show_all_cards'
-    get  'cards/show_all_cards'
-    get  'cards/show_single_card'
-    get  'cards/show_card_from_email'
-    post 'cards/create_a_card'
-    post 'cards/create_from_image'   
-    post 'cards/from_preview'   
-    get  'cards/search'   
-
-    resources :users
-    resources :sessions, :only => [:new, :create, :destroy]
+    scope :path => '/cards', :controller => :cards do
+        get  'show_all_cards'
+        get  'show_single_card'
+        get  'show_card_from_email'
+        post 'create_a_card'
+        post 'create_from_image'   
+        post 'from_preview'   
+        get  'search'   
+    end
     resources :cards, :only => [:create]
+
+    resources :sessions, :only => [:new, :create, :destroy]
 
     match '/signup', :to => 'users#new'
     match '/signin', :to => 'sessions#new'

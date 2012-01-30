@@ -338,10 +338,30 @@ describe UsersController do
         end
 
         it "should show the user's sent cards" do
-            card1 = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 1", :template => @template)
-            card2 = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 2", :template => @template)
+            card = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 1", :template => @template)
             get :show, :id => @sender
             response.should contain(/see sent cards/i)
         end
+
+        it "should show the user's received cards" do
+            card = Factory(:card, :sender => @recipient, :recipient => @sender, :greeting => "Greeting 1", :template => @template)
+            get :show, :id => @sender
+            response.should contain(/see received cards/i)
+        end
+
+        it "should show the user's cards to sign" do
+            card = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 1", :template => @template)
+            card.signers << @sender
+            get :show, :id => @sender
+            response.should contain(/see cards to sign/i)
+        end
+
+        it "should show the user's signed cards" do
+            card = Factory(:card, :sender => @sender, :recipient => @recipient, :greeting => "Greeting 1", :template => @template)
+            signature = Factory(:signature, :signer => @sender, :card => card)
+            get :show, :id => @sender
+            response.should contain(/see cards to sign/i)
+        end
+
     end
 end

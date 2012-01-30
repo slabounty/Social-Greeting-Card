@@ -42,3 +42,9 @@ end
 Factory.define :tag do |tag|
     tag.tag                 "congratulations"
 end
+
+Factory.define :signature do |signature|
+    signature.signer        :signer
+    signature.card          :card
+    signature.message       "congratulations"
+end
