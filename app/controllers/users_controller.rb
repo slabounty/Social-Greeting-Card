@@ -48,17 +48,12 @@ class UsersController < ApplicationController
     end
 
     def index
-#        puts "users/index: #{params} Enter "
         @title = "All users"
         @suggestion = "Pick someone and send them a card!"
         if params[:term]
             search_term = params[:term].split(",").last.strip
             @users = User.find(:all, :conditions => ['email LIKE ?', "#{search_term}%"])
-            @users_hash = []
-            @users.each do |user|
-                @users_hash << { "label" => user.email }
-            end
-
+            @users_hash = @users.map { |user| {"label" => user.email} }
         else
             @users = User.where(:active => true).paginate(:page => params[:page])
         end
