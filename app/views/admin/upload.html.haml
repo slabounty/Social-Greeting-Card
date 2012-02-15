@@ -1,0 +1,7 @@
+%h1 Pick a file to upload ...
+= form_tag("/admin/upload_template", :multipart => true ) do
+  = label_tag("File to upload as a template: ")
+  %p
+  = file_field_tag :template_file_name
+  %p
+  = submit_tag("Upload the template!")
