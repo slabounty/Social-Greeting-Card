@@ -1,0 +1,12 @@
+%h1 
+  Sign Card for 
+  = @card.recipient.display_name
+
+= render :partial => 'cards/cardbases', :locals => {:card => @card, :display_type => :signed}
+
+= form_tag ("do_sign") do
+  = label_tag("Add A Message: ")
+  = text_field_tag(:message)
+  = hidden_field_tag :card, @card.id
+  = hidden_field_tag :signer, @signer.id
+  = submit_tag("Submit")

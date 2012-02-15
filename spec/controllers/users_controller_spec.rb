@@ -56,7 +56,8 @@ describe UsersController do
 
         it "should include the user's name" do
             get :show, :id => @user
-            response.should have_selector("h1", :content => "#{@user.first_name} #{@user.last_name}")
+            response.should have_selector("h1", :content => "#{@user.first_name}")
+            response.should have_selector("h1", :content => "#{@user.last_name}")
         end
 
         it "should have a profile image" do
@@ -146,7 +147,7 @@ describe UsersController do
         it "should have a link to change the Gravatar" do
             get :edit, :id => @user
             gravatar_url = "http://gravatar.com/emails"
-            response.should have_selector("a", :href => gravatar_url, :content => "change")
+            response.should have_selector("a", :href => gravatar_url, :content => "Change")
         end
     end
 

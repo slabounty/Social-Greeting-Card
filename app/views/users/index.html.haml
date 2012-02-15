@@ -1,0 +1,9 @@
+%h1= @title
+%h2{:class => "sendcard_suggestion_button round" }= @suggestion
+
+= will_paginate
+
+%ul{:class => "users"}
+  = render @users
+
+= will_paginate
