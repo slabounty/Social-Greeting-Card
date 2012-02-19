@@ -1,0 +1,21 @@
+= form_for @card do |f|
+    = render 'shared/error_messages', :object => f.object
+
+    %h3 Add A Greeting:
+    .field
+        = f.text_area :greeting
+
+    %h3 Add Signers Email (put in their email addresses, comma separated):
+    .field
+        = f.text_area :signers
+
+    %h3 Select Card:
+    - @templates.each do |template|
+        = image_tag "card_images/#{template.image_name}", :size => "100x100"
+        = f.radio_button :template_id, template.id
+        %br
+
+    = f.hidden_field :recipient_id, :value => @card.recipient_id
+
+    .actions
+        = f.submit "Send the Card!"
